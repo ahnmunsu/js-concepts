@@ -52,7 +52,7 @@ https://github.com/leonardomso/33-js-concepts을 참고하여 자바 스크립�
 *  Boolean
 *  Null
 *  Undefined
-*  
+*  Symbol
 ### Number
 #### 정수
 ```javascript

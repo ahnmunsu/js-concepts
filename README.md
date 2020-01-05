@@ -222,7 +222,8 @@ true + false
 ==> "number15" + 3 
 ==> "number153"
 
-`+` 연산자는 좌에서 우로 결합한다. 그래서 "number"와 15가 먼저 실행되는데 `+` 연산자가 숫자 15를 string conversion한다.  
+`+` 연산자는 좌에서 우로 결합한다. 
+그래서 "number"와 15가 먼저 실행되는데 `+` 연산자가 숫자 15를 string conversion한다.  
 그 결과 "number15"가 되고 다시 숫자 3이 string conversion된다.
 ```
 ```
@@ -279,7 +280,8 @@ null은 null이나 undefined일 때만 같고 다른 모든 것들과는 다르�
 ==> 'x' == 'x'
 ==>  true
 
-`==` 연산자는 Array에 대해 numeric conversion을 한다. Array의 `valueOf()` method는 Array 자신을 리턴하는데 그것은 원시값(primitive)이 아니기 때문에 무시된다.  
+`==` 연산자는 Array에 대해 numeric conversion을 한다.
+Array의 `valueOf()` method는 Array 자신을 리턴하는데 그것은 원시값(primitive)이 아니기 때문에 무시된다.  
 Array의 `toString()`은 ['x']를 'x' 문자열로 변환한다.
 ```
 ```
@@ -299,13 +301,15 @@ Array의 `toString()`은 빈 문자열을 리턴한다.
 ==> true && true             // internally
 ==> {}
 
-논리 `||`, `&&` 연산자는 피연산자를 내부적으로 boolean으로 변환한다. 하지만 리턴은 boolean이 아닌 원래 피연산자를 리턴한다.  
+논리 `||`, `&&` 연산자는 피연산자를 내부적으로 boolean으로 변환한다. 
+하지만 리턴은 boolean이 아닌 원래 피연산자를 리턴한다.  
 ```
 ```
 [1,2,3] == [1,2,3]
 ==>  false
 
-피연산자들이 같은 타입이기 때문에 형변환이 필요없다. 그래서 `==` 연산자는 동일한 object인지 확인한다. (object의 내용이 같은지 확인하는 것이 아니다.)  
+피연산자들이 같은 타입이기 때문에 형변환이 필요없다. 
+그래서 `==` 연산자는 동일한 object인지 확인한다. (object의 내용이 같은지 확인하는 것이 아니다.)  
 이 두 Array는 각각의 다른 인스턴스이기 때문에 같지 않다. 
 ```
 ```
@@ -318,7 +322,8 @@ Array의 `toString()`은 빈 문자열을 리턴한다.
 ==> '0[object Object]1'
 
 모든 피연산자가 원시값이 아니다.  그래서 `+` 연산자는 왼쪽부터 numeric conversion을 한다.  
-첫 번째 {}는 object 리터럴이 아닌 블록문으로 처리되어 무시된다. 그래서 +[] 표현부터 평가되는데 `toString()` method에 의해 빈 문자열로 변환되고 그 다음 0으로 된다.
+첫 번째 {}는 object 리터럴이 아닌 블록문으로 처리되어 무시된다. 
+그래서 +[] 표현부터 평가되는데 `toString()` method에 의해 빈 문자열로 변환되고 그 다음 0으로 된다.
 ```
 ```
 !+[]+[]+![]  

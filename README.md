@@ -512,7 +512,83 @@ function grandfather() {
 ---
 
 ## IIFE, Modules and Namespaces
-...
+### IIFE (Immediately-Invoked Function Expressions)
+*  IIFE는 정의와 동시에 호출되는 함수이다.
+```
+(function sayHi() {
+        alert('Hi there!'); 
+    }
+)(); 
+// alerts 'Hi there!'
+```
+*  IIFE로 인자 전달하기
+```
+(function (name) { 
+        alert(`Hi, ${name}`); 
+    }
+)('Kim'); 
+// alerts 'Hi, Kim'
+```
+*  IIFE의 주요 사용 용도는 private scope를 만들기 위해서 이다. 다시 말해 내부의 코드가 global scope를 더럽히는 것을 방지하고 내부 변수를 외부에서 참조하지 못 하도록 보호하기 위해서 이다.  
+아래는 버튼 클릭 수를 세는 예제이다.
+```
+<!-- button.html --> 
+<html>
+    <body>
+        <button id='button'>Click me!</button>
+        <script src='button.js'>
+        </script> 
+    </body>
+</html>
+```
+```
+// button.js
+const button = document.getElementById('button');
+
+button.addEventListener('click', (function() {
+    let count = 0;
+    return function() {
+        count += 1;
+
+        if (count === 2) {
+            alert('This alert appears every other press!');
+            count = 0;
+        }
+    };
+})());
+```
+*  특정한 실행 context를 생성하기 위해 오직 한 번 실행되는 의도로 사용된다.
+*  ES5에서는 변수의 scope가 function에 의해서만 정해질 수 있었기 때문에 사용 되었다. ES6부터는 let, const, module로 대체할 수 있다.
+
+### Modules
+*  클라이언트 사이드 자바스크립트는 script 태그를 사용하여 외부의 스크립트 파일을 가져올 수는 있지만, 파일마다 독립적인 파일 스코프를 갖지 않고 하나의 전역 객체(Global Object)를 공유한다.
+*  서버 사이드 자바스크립트 런타임 환경인 Node.js는 모듈 시스템의 사실상 표준(de facto standard)인 CommonJS를 채택하였고 독자적인 진화를 거쳐 현재는 CommonJS 사양과 100% 동일하지는 않지만 기본적으로 CommonJS 방식을 따르고 있다.
+*  ES6에서는 클라이언트 사이드 자바스크립트에서도 동작하는 모듈 기능을 추가하였다. 2019년 11월 현재, 모던 브라우저(Chrome 61, FF 60, SF 10.1, Edge 16 이상)에서 ES6 모듈을 사용할 수 있다.
+*  script 태그에 type="module" 어트리뷰트를 추가하면 로드된 자바스크립트 파일은 모듈로서 동작한다. ES6 모듈의 파일 확장자는 모듈임을 명확히 하기 위해 mjs를 사용하도록 권장한다.
+```
+<script type="module" src="lib.mjs"></script>
+<script type="module" src="app.mjs"></script> 
+```
+*  단, 아래와 같은 이유로 아직까지는 브라우저가 지원하는 ES6 모듈 기능보다는 Webpack 등의 모듈 번들러를 사용하는 것이 일반적이다.
+  *  IE를 포함한 구형 브라우저는 ES6 모듈을 지원하지 않는다.
+  *  브라우저의 ES6 모듈 기능을 사용하더라도 트랜스파일링이나 번들링이 필요하다.
+  *  아직 지원하지 않는 기능(Bare import 등)이 있다.
+  *  점차 해결되고는 있지만 아직 몇가지 이슈가 있다.
+
+### Namespaces
+*  Namespace 패턴은 전역 공간에 변수를 생성하고 코드를 사용하는 것을 방지하기 위해 네임스페이스라는 분리된 공간을 만들어 그 안에서 변수를 선언하고 코드를 작성하도록 하는 패턴이다.
+*  Namespace 생성
+```
+var NAMESPACE = {}; // 네임스페이스 생성
+
+NAMESPACE.number = 1; // 변수 생성
+NAMESPACE.func = function() {}; // 함수 생성
+NAMESPACE.obj = {}; // 객체 생성
+``` 
+*  Namespace 이름은 충돌 방지를 위해 모두 대문자를 사용한다.
+*  모든 변수와 함수에 접두어를 붙여야 하기 때문에 전체적으로 코드량이 약간 더 많아지고 따라서 파일 크기도 늘어난다.
+*  이름이 중첩되고 길어지므로 프로퍼티를 판별하기 위한 검색 작업도 길고 느려진다. 
+
 **[⬆ 목차](#목차)**
 
 ---

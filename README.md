@@ -202,7 +202,148 @@ console.log(myObject.mySymbol); // x
 ---
 
 ## Implicit, Explicit, Nominal, Structuring and Duck Typing
-...
+### Type Coersion
+```
+true + false
+==> 1 + 0
+==> 1
+```
+`+` 연산자가 true와 false를 numeric conversion한다.
+
+```
+12 / '6'
+==> 12 / 6
+==> 2
+```
+`/` 연산자가 string '6'을 numeric conversion한다.
+
+```
+"number" + 15 + 3 
+==> "number15" + 3 
+==> "number153"
+```
+`+` 연산자는 좌에서 우로 결합한다. 그래서 "number"와 15가 먼저 실행되는데 `+` 연산자가 숫자 15를 string conversion한다.  
+그 결과 "number15"가 되고 다시 숫자 3이 string conversion된다.
+
+```
+15 + 3 + "number" 
+==> 18 + "number" 
+==> "18number"
+```
+15 + 3이 18로 계산되고 `+` 연산자가 18을 string conversion한다.
+
+```
+[1] > null
+==> '1' > 0
+==> 1 > 0
+==> true
+```
+`>` 연산자가 [1]과 null을 numeric conversion을 한다.
+
+```
+"foo" + + "bar" 
+==> "foo" + (+"bar") 
+==> "foo" + NaN 
+==> "fooNaN"
+```
+단항 연산자 `+` 연산자가 결합 순위가 높기 때문에 +"bar"이 먼저 평가된다.  
+그리고 이항 `+` 연산자가 NaN을 string conversion한다.
+
+```
+'true' == true
+==> NaN == 1
+==> false
+
+false == 'false'   
+==> 0 == NaN
+==> false
+```
+`==` 연산자는 numeric conversion를 한다. 'true'는 NaN으로, true는 1로 변환된다.
+
+```
+null == ''
+==> false
+```
+`==` 연산자는 보통 numeric conversion을 하지만, null과 함께 할 때만 그렇지 않다.  
+null은 null이나 undefined일 때만 같고 다른 모든 것들과는 다르다.
+
+```
+!!"false" == !!"true"  
+==> true == true
+==> true
+```
+`!!` 연산자는 'true'와 'false' 문자열이 둘 다 빈 문자열이 아니기 때문에 true로 변환한다.  
+
+```
+['x'] == 'x'  
+==> 'x' == 'x'
+==>  true
+```
+`==` 연산자는 Array에 대해 numeric conversion을 한다. Array의 `valueOf()` method는 Array 자신을 리턴하는데 그것은 원시값(primitive)이 아니기 때문에 무시된다.  
+Array의 `toString()`은 ['x']를 'x' 문자열로 변환한다.
+
+```
+[] + null + 1  
+==>  '' + null + 1  
+==>  'null' + 1  
+==> 'null1'
+```
+`+` 연산자는 []을 numeric conversion한다. Array의 `valueOf()` method는 그 자신을 리턴하기 때문에 무시된다.  
+Array의 `toString()`은 빈 문자열을 리턴한다.
+
+```
+0 || "0" && {}  
+==>  (0 || "0") && {}
+==> (false || true) && true  // internally
+==> "0" && {}
+==> true && true             // internally
+==> {}
+```
+논리 `||`, `&&` 연산자는 피연산자를 내부적으로 boolean으로 변환한다. 하지만 리턴은 boolean이 아닌 원래 피연산자를 리턴한다.  
+
+```
+[1,2,3] == [1,2,3]
+==>  false
+```
+피연산자들이 같은 타입이기 때문에 형변환이 필요없다. 그래서 `==` 연산자는 동일한 object인지 확인한다. (object의 내용이 같은지 확인하는 것이 아니다.)  
+이 두 Array는 각각의 다른 인스턴스이기 때문에 같지 않다. 
+
+```
+{}+[]+{}+[1]
+==> +[]+{}+[1]
+==> 0 + {} + [1]
+==> 0 + '[object Object]' + [1]
+==> '0[object Object]' + [1]
+==> '0[object Object]' + '1'
+==> '0[object Object]1'
+```
+모든 피연산자가 원시값이 아니다.  그래서 `+` 연산자는 왼쪽부터 numeric conversion을 한다.  
+첫 번째 {}는 object 리터럴이 아닌 블록문으로 처리되어 무시된다. 그래서 +[] 표현부터 평가되는데 `toString()` method에 의해 빈 문자열로 변환되고 그 다음 0으로 된다.
+
+```
+!+[]+[]+![]  
+==> (!+[]) + [] + (![])
+==> !0 + [] + false
+==> true + [] + false
+==> true + '' + false
+==> 'truefalse'
+```
+연산자 우선 순위를 따라 처리된다.
+
+```
+new Date(0) - 0
+==> 0 - 0
+==> 0
+```
+`-` 연산자는 Date를 numeric conversion한다. `Date.valueOf()`는 Unix epoch부터 밀리초를 리턴한다.
+
+```
+new Date(0) + 0
+==> 'Thu Jan 01 1970 02:00:00 GMT+0200 (EET)' + 0
+==> 'Thu Jan 01 1970 02:00:00 GMT+0200 (EET)0'
+```
+`+` 연산자는 default conversion을 한다. Date는 string conversion이 default라서 `toString()` method가 사용된다.
+
 **[⬆ 목차](#목차)**
 
 ---

@@ -627,7 +627,64 @@ NAMESPACE.obj = {}; // 객체 생성
 ---
 
 ## setTimeout, setInterval and requestAnimationFrame
-...
+### setTimeout
+*  setTimeout 함수는 설정한 시간만큼 기다린 후 단 한번 지정한 함수를 실행한다.
+*  정지하려면 clearTimeout을 호출한다.
+```javascript
+/* 실행 */
+var loopTimer = setTimeout(function(){ /* process... */}, delay);
+/* 정지 */
+clearTimeout(loopTimer);
+```
+*  setTimeout 함수는 단 한번 지정된 함수를 실행하지만 재귀 호출을 통해 반복적으로 실행 할 수 있다.
+*  만약 delay를 100ms로 설정했다면 지정된 함수가 실행되는 간격은 100ms 이상이다.
+![settimeout](./img/settimeout.PNG)
+
+### setInterval
+*  setInterval 함수는 설정한 시간만큼 기다린 후 지정한 함수를 실행하고 이 동작을 반복한다.
+*  정지하려면 clearInterval을 호출한다.
+```javascript
+/* 실행 */
+var onceTimer = setInterval(function(){ /* process... */ }, delay); 
+/* 정지 */
+clearInterval(onceTimer);
+```
+*  브라우저가 함수를 실행할 수 없는 상태(busy)라면 이벤트를 최대 길이가 1인 큐에 저장한다.
+*  큐에 이미 이벤트가 존재한다면 그 이벤트는 skip 된다.
+*  만약 delay를 100ms로 설정했다면 실제 delay는 100ms보다 적다.
+![setinterval](./img/setinterval.PNG)
+
+### setTimeout, setInterval limitations
+*  브라우저는 setTimeout의 5개 이상의 중첩 호출 또는 setInterval(5 번째 호출 이후)에 대한 최소 지연을 4ms로 제한한다. (historical reason?)
+*  브라우저 내장 타이머는 여러 이유들로 인해 느려질 수 있다.
+    *  CPU 과부하
+    *  브러우저 탭이 백그라운드 모드에 있을 때
+    *  랩탑이 배터리로 사용 중 일 때
+
+### requestAnimationFrame
+*  전통적으로 javascript에서 애니메이션을 만들 때는 setTimeout이나 setInterval을 사용했었다.
+```js
+var adiv = document.getElementById('mydiv')
+var leftpos = 0
+setInterval(function(){
+    leftpos += 5
+    adiv.style.left = leftpos + 'px' // move div by 5 pixels each time
+}, 50) // run code every 50 milliseconds
+```
+*  위 코드는 논리적으로 그럴듯 하지만 실제 동작은 완벽하지 않다. 이유는 다음과 같다.
+    *  시스템 리소스 변동으로 인해 지연 간격이 일정하지 않다.
+    *  화면을 지속적으로 변경하기 위해 과도하게 setTimeout, setInterval을 사용하면 layout thrashing으로 인해 성능 저하가 유발된다.
+*  requestAnimationFrame method는 실제 화면이 갱신되어 표시되는 주기에 따라 함수를 호출해주기 때문에 자바스크립트가 프레임 시작 시 실행되도록 보장한다.
+*  보통 1초에 60회 정도 실행이 되지만 대부분의 브라우저는 W3C 권장사항에 따라 디스플레이 주사율과 일치하도록 실행된다.
+*  requestAnimationFrame()는 현재 창에 표시 되지 않으면 애니메이션을 중지한다.
+```js
+var adiv = document.getElementById('mydiv')
+var leftpos = 0
+requestAnimationFrame(function(timestamp){
+    leftpos += 5
+    adiv.style.left = leftpos + 'px'
+})
+```
 **[⬆ 목차](#목차)**
 
 ---

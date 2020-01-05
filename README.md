@@ -421,7 +421,7 @@ console.log(feed != null); // true
 ---
 
 ## Function Scope, Block Scope and Lexical Scope
-*  Global Scope
+###  Global Scope  
 Javascript document에는 오직 하나의 global scope만 존재한다.  
 함수 바깥에 정의된 변수는 global scope에 속한다.
 ```
@@ -439,7 +439,7 @@ function logName() {
 
 logName(); // logs 'msahn'
 ```
-*  Local Scope
+### Local Scope  
 함수 안에서 정의된 변수는 local scope에 속한다.
 ```
 // Global Scope
@@ -456,7 +456,7 @@ function anotherFunction() {
 }
 // Global Scope
 ```
-*  Block statements
+### Block statements
 Block statement는 function과 달리 `if`와 `switch` 같은 condition문이나 `for`와 `while`같은 loop문이다.
 ```
 if (true) {
@@ -482,7 +482,7 @@ console.log(name); // logs 'msahn'
 console.log(likes); // Uncaught ReferenceError: likes is not defined
 console.log(skills); // Uncaught ReferenceError: skills is not defined
 ```
-* Lexical Scope
+### Lexical Scope  
 lexical scope는 포개어진 함수 그룹을 의미한다.  
 안쪽의 함수는 그 부모 scope의 변수와 resource에 접근이 가능하다.
 ```

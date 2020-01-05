@@ -90,6 +90,8 @@ if (f1 + f2 == 0.3) {
 *  parseInt()
 *  parseFloat()
 
+---
+
 ### String
 *  텍스트 데이터를 나타내는데 사용한다.
 *  16비트 부호없는 정수 값 요소들의 집합이다.
@@ -110,14 +112,85 @@ var hex_num_string = hex_num.toString(16); // 16진수 문자열 "a"
 ```
 var im_null = null;
 var im_null_string = String(im_null); // 문자열 "null"
-var im_undefined = null;
+var im_undefined = undefined;
 var im_undefined_string = String(im_undefeind); // 문자열 "undefined"
 ```
 
 ### Boolean
+주어진 조건이 참인지 거짓인지 나타내는 자료형이다.
+```
+1 < 2; // true
+1 > 2; // false
+3 === 3; // true
+3 !== 3; // false
+Number.isFinite(Infinity); // false
+Number.isNaN(NaN); // true
+'hello'.includes('ll'); // true
+```
+
 ### Null
+*  어떤 값이 *의도적으로* 비어있음을 표현한다.
+*  null 값을 가진 객체 변수는 어떠한 객체도 가리키고 있지 않는 상태이다.
+*  함수에서 리턴값을 기대하지만 일치하는 값이 없을 경우에 null을 리턴하는 식으로 사용한다.
+*  null과 undefined 차이
+```
+typeof null          // "object" (하위호환 유지를 위해 "null"이 아님)
+typeof undefined     // "undefined"
+null === undefined   // false
+null  == undefined   // true
+null === null        // true
+null == null         // true
+!null                // true
+isNaN(1 + null)      // false
+isNaN(1 + undefined) // true
+```
+
 ### Undefined
+*  선언한 후 값을 할당하지 않은 변수 혹은 값이 주어지지 않은 인수에 자동으로 할당된다.
+```
+var x; // 값을 할당하지 않고 변수 선언
+console.log("x's value is", x) // "x's value is undefined" 출력
+```
+
 ### Symbol
+*  ECMAScript 2015에서 새로 등장한 원시 타입이다.
+*  전역 function/object인 Symbol을 호출하면 타입이 symbol이 된다.
+```
+var mySymbol = Symbol(); // typeof mySymbol -> "symbol"
+```
+*  Symbol은 “new” 키워드를 사용하지 못 한다.
+```
+var mySymbol = new Symbol(); //throws error
+```
+*  Symbol은 description을 가진다.
+```
+// mySymbol variable now holds a "symbol" unique value
+// its description is "some text"
+var mySymbol = Symbol('some text');
+```
+*  Symbol은 unique하다.
+```
+var mySymbol1 = Symbol('some text');
+var mySymbol2 = Symbol('some text');
+mySymbol1 == mySymbol2 // false
+```
+*  Symbol.for를 사용하면 Symbol이 싱글톤처럼 작동한다.
+```
+var mySymbol1 = Symbol.for('some key'); //creates a new symbol
+var mySymbol2 = Symbol.for('some key'); // **returns the same symbol
+mySymbol1 == mySymbol2 //true
+```
+*for 메서드를 사용하는 이유는 어떤 한곳에서 Symbol을 만들고 다른 곳에서 같은 Symbol에 접근하기 위해서이다.*
+*  Symbol은 객체 프로퍼티 키일 수 있다.
+객체에 Symbol을 속성키로 붙일 수 있다. Symbol은 unique 하기 때문에 이름 충돌없이 객체의 속성을 계속 추가할 수 있다.
+```
+var mySymbol = Symbol("some car description");
+var myObject = { name: 'bmw' };
+myObject[mySymbol] = 'This is a car';
+console.log(mySymbol); // Symbol(some car description)
+console.log(myObject[mySymbol]); // This is a car
+console.log(myObject.mySymbol); // x
+```
 **[⬆ 목차](#목차)**
 
 ---

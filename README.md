@@ -116,6 +116,8 @@ var im_undefined = undefined;
 var im_undefined_string = String(im_undefeind); // 문자열 "undefined"
 ```
 
+---
+
 ### Boolean
 주어진 조건이 참인지 거짓인지 나타내는 자료형이다.
 ```javascript
@@ -127,6 +129,8 @@ Number.isFinite(Infinity); // false
 Number.isNaN(NaN); // true
 'hello'.includes('ll'); // true
 ```
+
+---
 
 ### Null
 *  어떤 값이 *의도적으로* 비어있음을 표현한다.
@@ -145,12 +149,16 @@ isNaN(1 + null)      // false
 isNaN(1 + undefined) // true
 ```
 
+---
+
 ### Undefined
 *  선언한 후 값을 할당하지 않은 변수 혹은 값이 주어지지 않은 인수에 자동으로 할당된다.
 ```javascript
 var x; // 값을 할당하지 않고 변수 선언
 console.log("x's value is", x) // "x's value is undefined" 출력
 ```
+
+---
 
 ### Symbol
 *  ECMAScript 2015에서 새로 등장한 원시 타입이다.
@@ -350,6 +358,8 @@ new Date(0) + 0
 `+` 연산자는 default conversion을 한다. Date는 string conversion이 default라서 `toString()` method가 사용된다.
 ```
 
+---
+
 ### Nonimal Typing
 C++, Java, Swift 같은 언어들이 주요 nominal type system이다.
 ```javascript
@@ -359,6 +369,8 @@ class Bar { method(input: string) { /* ... */ } }
 let foo: Foo = new Bar(); // Error!
 ```
 클래스 이름이 다른 변수에 대입하려고 할 때 에러가 발생한다.
+
+---
 
 ### Structural Typing
 OCaml, Haskell, Elm 같은 언어들이 주요 structural type system이다.
@@ -376,6 +388,8 @@ class Bar { method(input: number) { /* ... */ } }
 
 let foo: Foo = new Bar(); // Error!
 ```
+
+---
 
 ### Duck Typing
 *  Duck Typing은 인자가 어떤 형인지 상관 없이 그 동작을 할 수 있는지를 확인하여 객체를 판단하는 방법이다. 
@@ -439,6 +453,9 @@ function logName() {
 
 logName(); // logs 'msahn'
 ```
+
+---
+
 ### Local Scope  
 함수 안에서 정의된 변수는 local scope에 속한다.
 ```javascript
@@ -456,6 +473,9 @@ function anotherFunction() {
 }
 // Global Scope
 ```
+
+---
+
 ### Block statements
 Block statement는 function과 달리 `if`와 `switch` 같은 condition문이나 `for`와 `while`같은 loop문이다.
 ```javascript
@@ -482,6 +502,9 @@ console.log(name); // logs 'msahn'
 console.log(likes); // Uncaught ReferenceError: likes is not defined
 console.log(skills); // Uncaught ReferenceError: skills is not defined
 ```
+
+---
+
 ### Lexical Scope  
 lexical scope는 포개어진 함수 그룹을 의미한다.  
 안쪽의 함수는 그 부모 scope의 변수와 resource에 접근이 가능하다.
@@ -560,6 +583,8 @@ button.addEventListener('click', (function() {
 *  특정한 실행 context를 생성하기 위해 오직 한 번 실행되는 의도로 사용된다.
 *  ES5에서는 변수의 scope가 function에 의해서만 정해질 수 있었기 때문에 사용 되었다. ES6부터는 let, const, module로 대체할 수 있다.
 
+---
+
 ### Modules
 *  클라이언트 사이드 자바스크립트는 script 태그를 사용하여 외부의 스크립트 파일을 가져올 수는 있지만, 파일마다 독립적인 파일 스코프를 갖지 않고 하나의 전역 객체(Global Object)를 공유한다.
 *  서버 사이드 자바스크립트 런타임 환경인 Node.js는 모듈 시스템의 사실상 표준(de facto standard)인 CommonJS를 채택하였고 독자적인 진화를 거쳐 현재는 CommonJS 사양과 100% 동일하지는 않지만 기본적으로 CommonJS 방식을 따르고 있다.
@@ -574,6 +599,8 @@ button.addEventListener('click', (function() {
     *  브라우저의 ES6 모듈 기능을 사용하더라도 트랜스파일링이나 번들링이 필요하다.
     *  아직 지원하지 않는 기능(Bare import 등)이 있다.
     *  점차 해결되고는 있지만 아직 몇가지 이슈가 있다.
+
+---
 
 ### Namespaces
 *  Namespace 패턴은 전역 공간에 변수를 생성하고 코드를 사용하는 것을 방지하기 위해 네임스페이스라는 분리된 공간을 만들어 그 안에서 변수를 선언하고 코드를 작성하도록 하는 패턴이다.

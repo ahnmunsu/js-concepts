@@ -344,6 +344,67 @@ new Date(0) + 0
 
 `+` 연산자는 default conversion을 한다. Date는 string conversion이 default라서 `toString()` method가 사용된다.
 ```
+
+### Nonimal Typing
+C++, Java, Swift 같은 언어들이 주요 nominal type system이다.
+```
+class Foo { method(input: string) { /* ... */ } }
+class Bar { method(input: string) { /* ... */ } }
+
+let foo: Foo = new Bar(); // Error!
+```
+클래스 이름이 다른 변수에 대입하려고 할 때 에러가 발생한다.
+
+### Structural Typing
+OCaml, Haskell, Elm 같은 언어들이 주요 structural type system이다.
+```
+class Foo { method(input: string) { /* ... */ } }
+class Bar { method(input: string) { /* ... */ } }
+
+let foo: Foo = new Bar(); // Works!
+```
+structure가 완벽하게 같은 클래스는 이름이 달라도 대입이 가능하다.  
+그러나 클래스 내용을 변경하면 에러가 발생한다.  
+```
+class Foo { method(input: string) { /* ... */ } }
+class Bar { method(input: number) { /* ... */ } }
+
+let foo: Foo = new Bar(); // Error!
+```
+
+### Duck Typing
+*  Duck Typing은 인자가 어떤 형인지 상관 없이 그 동작을 할 수 있는지를 확인하여 객체를 판단하는 방법이다. 
+*  "오리처럼 걷고, 오리처럼 소리 내면 오리로 간주한다(If it walks like a duck and quacks like a duck, I would call it a duck.)"는 말에서 유래했다.
+아래는 자동 급식 장치를 Javascript로 구현한 예제이다. 자동 급식 장치 앞에서 "꽥" 소리를 내면, 즉 quack() method를 수행하면 모이를 제공한다.
+```
+function FeedDispenser() {}; 
+FeedDispenser.prototype.requestFeed = function(quackable) {
+    return (quackable.quack() != null) ? new Feed() : null; 
+};
+```
+
+다음은 Goose 객체를 구현한 예제이다.
+```
+function Goose() {};
+Goose.prototype.honk = function() {
+    return honk();
+}
+```
+
+프로토타입 객체에 quack() 메서드를 추가로 구현한다.
+```
+Goose.prototype.quack = function() {
+    return this.honk(); 
+}
+```
+
+위와 같이 확장된 Goose 인스턴스를 자동 급식 장치에 적용하면 다음과 같다.
+```
+var goose = new Goose();
+var feedDispenser = new FeedDispenser();
+var feed = feedDispenser.requestFeed(goose);
+console.log(feed != null); // true
+```
 **[⬆ 목차](#목차)**
 
 ---

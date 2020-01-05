@@ -55,19 +55,19 @@ https://github.com/leonardomso/33-js-concepts을 참고하여 자바 스크립�
 *  Ojbect
 ### Number
 #### 정수
-```
+```javascript
 var decimalNum = 100; // 기본 숫자 리터럴 형식 10진수로 초기화
 var octalNum = 010; // 8진수로 초기화
 var hexNum = 0x10; // 16진수로 초기화
 ```
 #### 부동소수점
-```
+```javascript
 var floatNum1 = 3.14;
 var floatNum2 = 3.125e7;
 ```
 ##### 부동소수점 사칙연산 부정확
 0.1 + 0.2 결과는 0.30000000000000004로 아래 코드는 의도대로 동작하지 않는다.
-```
+```javascript
 var f1 = 0.1;
 var f2 = 0.2;
 
@@ -100,7 +100,7 @@ if (f1 + f2 == 0.3) {
 *  기존 문자열을 String.substr(), String.concat() 같은 method나 접합 연산자(+)를 사용해 새로운 문자열을 만든다.
 #### 문자열로 변환하는 함수
 *  toString() method는 값에 해당하는 문자열을 반환한다.
-```
+```javascript
 var hundred = 100;
 var hundred_string = hundred.toString(); // 문자열 "100"
 var is_true = true;
@@ -109,7 +109,7 @@ var hex_num = 10;
 var hex_num_string = hex_num.toString(16); // 16진수 문자열 "a"
 ```
 *  String() 함수는 null이나 undefined도 사용 가능하다. (*toString은 불가능*)
-```
+```javascript
 var im_null = null;
 var im_null_string = String(im_null); // 문자열 "null"
 var im_undefined = undefined;
@@ -118,7 +118,7 @@ var im_undefined_string = String(im_undefeind); // 문자열 "undefined"
 
 ### Boolean
 주어진 조건이 참인지 거짓인지 나타내는 자료형이다.
-```
+```javascript
 1 < 2; // true
 1 > 2; // false
 3 === 3; // true
@@ -133,7 +133,7 @@ Number.isNaN(NaN); // true
 *  null 값을 가진 객체 변수는 어떠한 객체도 가리키고 있지 않는 상태이다.
 *  함수에서 리턴값을 기대하지만 일치하는 값이 없을 경우에 null을 리턴하는 식으로 사용한다.
 *  null과 undefined 차이
-```
+```javascript
 typeof null          // "object" (하위호환 유지를 위해 "null"이 아님)
 typeof undefined     // "undefined"
 null === undefined   // false
@@ -147,7 +147,7 @@ isNaN(1 + undefined) // true
 
 ### Undefined
 *  선언한 후 값을 할당하지 않은 변수 혹은 값이 주어지지 않은 인수에 자동으로 할당된다.
-```
+```javascript
 var x; // 값을 할당하지 않고 변수 선언
 console.log("x's value is", x) // "x's value is undefined" 출력
 ```
@@ -155,27 +155,27 @@ console.log("x's value is", x) // "x's value is undefined" 출력
 ### Symbol
 *  ECMAScript 2015에서 새로 등장한 원시 타입이다.
 *  전역 function/object인 Symbol을 호출하면 타입이 symbol이 된다.
-```
+```javascript
 var mySymbol = Symbol(); // typeof mySymbol -> "symbol"
 ```
 *  Symbol은 “new” 키워드를 사용하지 못 한다.
-```
+```javascript
 var mySymbol = new Symbol(); //throws error
 ```
 *  Symbol은 description을 가진다.
-```
+```javascript
 // mySymbol variable now holds a "symbol" unique value
 // its description is "some text"
 var mySymbol = Symbol('some text');
 ```
 *  Symbol은 unique하다.
-```
+```javascript
 var mySymbol1 = Symbol('some text');
 var mySymbol2 = Symbol('some text');
 mySymbol1 == mySymbol2 // false
 ```
 *  Symbol.for를 사용하면 Symbol이 싱글톤처럼 작동한다.
-```
+```javascript
 var mySymbol1 = Symbol.for('some key'); //creates a new symbol
 var mySymbol2 = Symbol.for('some key'); // **returns the same symbol
 mySymbol1 == mySymbol2 //true
@@ -183,7 +183,7 @@ mySymbol1 == mySymbol2 //true
 *for 메서드를 사용하는 이유는 어떤 한곳에서 Symbol을 만들고 다른 곳에서 같은 Symbol에 접근하기 위해서이다.*
 *  Symbol은 객체 프로퍼티 키일 수 있다.
 객체에 Symbol을 속성키로 붙일 수 있다. Symbol은 unique 하기 때문에 이름 충돌없이 객체의 속성을 계속 추가할 수 있다.
-```
+```javascript
 var mySymbol = Symbol("some car description");
 var myObject = { name: 'bmw' };
 myObject[mySymbol] = 'This is a car';
@@ -352,7 +352,7 @@ new Date(0) + 0
 
 ### Nonimal Typing
 C++, Java, Swift 같은 언어들이 주요 nominal type system이다.
-```
+```javascript
 class Foo { method(input: string) { /* ... */ } }
 class Bar { method(input: string) { /* ... */ } }
 
@@ -362,7 +362,7 @@ let foo: Foo = new Bar(); // Error!
 
 ### Structural Typing
 OCaml, Haskell, Elm 같은 언어들이 주요 structural type system이다.
-```
+```javascript
 class Foo { method(input: string) { /* ... */ } }
 class Bar { method(input: string) { /* ... */ } }
 
@@ -370,7 +370,7 @@ let foo: Foo = new Bar(); // Works!
 ```
 structure가 완벽하게 같은 클래스는 이름이 달라도 대입이 가능하다.  
 그러나 클래스 내용을 변경하면 에러가 발생한다.  
-```
+```javascript
 class Foo { method(input: string) { /* ... */ } }
 class Bar { method(input: number) { /* ... */ } }
 
@@ -381,7 +381,7 @@ let foo: Foo = new Bar(); // Error!
 *  Duck Typing은 인자가 어떤 형인지 상관 없이 그 동작을 할 수 있는지를 확인하여 객체를 판단하는 방법이다. 
 *  "오리처럼 걷고, 오리처럼 소리 내면 오리로 간주한다(If it walks like a duck and quacks like a duck, I would call it a duck.)"는 말에서 유래했다.
 아래는 자동 급식 장치를 Javascript로 구현한 예제이다. 자동 급식 장치 앞에서 "꽥" 소리를 내면, 즉 quack() method를 수행하면 모이를 제공한다.
-```
+```javascript
 function FeedDispenser() {}; 
 FeedDispenser.prototype.requestFeed = function(quackable) {
     return (quackable.quack() != null) ? new Feed() : null; 
@@ -389,7 +389,7 @@ FeedDispenser.prototype.requestFeed = function(quackable) {
 ```
 
 다음은 Goose 객체를 구현한 예제이다.
-```
+```javascript
 function Goose() {};
 Goose.prototype.honk = function() {
     return honk();
@@ -397,14 +397,14 @@ Goose.prototype.honk = function() {
 ```
 
 프로토타입 객체에 quack() 메서드를 추가로 구현한다.
-```
+```javascript
 Goose.prototype.quack = function() {
     return this.honk(); 
 }
 ```
 
 위와 같이 확장된 Goose 인스턴스를 자동 급식 장치에 적용하면 다음과 같다.
-```
+```javascript
 var goose = new Goose();
 var feedDispenser = new FeedDispenser();
 var feed = feedDispenser.requestFeed(goose);
@@ -424,11 +424,11 @@ console.log(feed != null); // true
 ###  Global Scope  
 Javascript document에는 오직 하나의 global scope만 존재한다.  
 함수 바깥에 정의된 변수는 global scope에 속한다.
-```
+```javascript
 // the scope is by default global
 var name = 'msahn';
 ```
-```
+```javascript
 var name = 'msahn';
 
 console.log(name); // logs 'msahn'
@@ -441,7 +441,7 @@ logName(); // logs 'msahn'
 ```
 ### Local Scope  
 함수 안에서 정의된 변수는 local scope에 속한다.
-```
+```javascript
 // Global Scope
 function someFunction() {
     // Local Scope #1
@@ -458,7 +458,7 @@ function anotherFunction() {
 ```
 ### Block statements
 Block statement는 function과 달리 `if`와 `switch` 같은 condition문이나 `for`와 `while`같은 loop문이다.
-```
+```javascript
 if (true) {
     // this 'if' conditional block doesn't create a new scope
     var name = 'msahn'; // name is still in the global scope
@@ -466,7 +466,7 @@ if (true) {
 
 console.log(name); // logs 'msahn'
 ```
-```
+```javascript
 if (true) {
     // this 'if' conditional block doesn't create a scope
 
@@ -485,7 +485,7 @@ console.log(skills); // Uncaught ReferenceError: skills is not defined
 ### Lexical Scope  
 lexical scope는 포개어진 함수 그룹을 의미한다.  
 안쪽의 함수는 그 부모 scope의 변수와 resource에 접근이 가능하다.
-```
+```javascript
 function grandfather() {
     var name = 'msahn';
     // likes is not accessible here
@@ -514,7 +514,7 @@ function grandfather() {
 ## IIFE, Modules and Namespaces
 ### IIFE (Immediately-Invoked Function Expressions)
 *  IIFE는 정의와 동시에 호출되는 함수이다.
-```
+```javascript
 (function sayHi() {
         alert('Hi there!'); 
     }
@@ -522,7 +522,7 @@ function grandfather() {
 // alerts 'Hi there!'
 ```
 *  IIFE로 인자 전달하기
-```
+```javascript
 (function (name) { 
         alert(`Hi, ${name}`); 
     }
@@ -531,7 +531,7 @@ function grandfather() {
 ```
 *  IIFE의 주요 사용 용도는 private scope를 만들기 위해서 이다. 다시 말해 내부의 코드가 global scope를 더럽히는 것을 방지하고 내부 변수를 외부에서 참조하지 못 하도록 보호하기 위해서 이다.  
 아래는 버튼 클릭 수를 세는 예제이다.
-```
+```html
 <!-- button.html --> 
 <html>
     <body>
@@ -541,7 +541,7 @@ function grandfather() {
     </body>
 </html>
 ```
-```
+```javascript
 // button.js
 const button = document.getElementById('button');
 
@@ -565,7 +565,7 @@ button.addEventListener('click', (function() {
 *  서버 사이드 자바스크립트 런타임 환경인 Node.js는 모듈 시스템의 사실상 표준(de facto standard)인 CommonJS를 채택하였고 독자적인 진화를 거쳐 현재는 CommonJS 사양과 100% 동일하지는 않지만 기본적으로 CommonJS 방식을 따르고 있다.
 *  ES6에서는 클라이언트 사이드 자바스크립트에서도 동작하는 모듈 기능을 추가하였다. 2019년 11월 현재, 모던 브라우저(Chrome 61, FF 60, SF 10.1, Edge 16 이상)에서 ES6 모듈을 사용할 수 있다.
 *  script 태그에 type="module" 어트리뷰트를 추가하면 로드된 자바스크립트 파일은 모듈로서 동작한다. ES6 모듈의 파일 확장자는 모듈임을 명확히 하기 위해 mjs를 사용하도록 권장한다.
-```
+```html
 <script type="module" src="lib.mjs"></script>
 <script type="module" src="app.mjs"></script> 
 ```
@@ -578,7 +578,7 @@ button.addEventListener('click', (function() {
 ### Namespaces
 *  Namespace 패턴은 전역 공간에 변수를 생성하고 코드를 사용하는 것을 방지하기 위해 네임스페이스라는 분리된 공간을 만들어 그 안에서 변수를 선언하고 코드를 작성하도록 하는 패턴이다.
 *  Namespace 생성
-```
+```javascript
 var NAMESPACE = {}; // 네임스페이스 생성
 
 NAMESPACE.number = 1; // 변수 생성

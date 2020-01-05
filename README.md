@@ -1,5 +1,5 @@
-# Javascript 개념 정리
-https://github.com/leonardomso/33-js-concepts을 참고하여 자바 스크립트 개발자가 알아야할 개념을 정리했습니다.
+# Javascript 개발자가 알아야 할 개념 정리  
+https://github.com/leonardomso/33-js-concepts을 참고하여 자바 스크립트 개발자가 알아야 할 개념을 정리했습니다.
 
 ---
 

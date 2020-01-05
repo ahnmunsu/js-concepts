@@ -85,16 +85,39 @@ if (f1 + f2 == 0.3) {
 *  숫자를 0으로 나눈 경우 결과 값이 NaN이다.
 *  NaN == NaN은 false이다.
 *  isNaN 함수를 사용하여 검사한다.
-#### 문자를 숫자로 변환하는 함수
+#### 문자열을 숫자로 변환하는 함수
 *  Number()
 *  parseInt()
 *  parseFloat()
 
 ### String
+*  텍스트 데이터를 나타내는데 사용한다.
+*  16비트 부호없는 정수 값 요소들의 집합이다.
+*  String 의 길이는 String이 가지고 있는 요소의 갯수이다.
+*  문자열이 생성되면, 그 문자열을 수정할 수 없다.
+*  기존 문자열을 String.substr(), String.concat() 같은 method나 접합 연산자(+)를 사용해 새로운 문자열을 만든다.
+#### 문자열로 변환하는 함수
+*  toString() method는 값에 해당하는 문자열을 반환한다.
+```
+var hundred = 100;
+var hundred_string = hundred.toString(); // 문자열 "100"
+var is_true = true;
+var is_true_string = is_true.toString(); // 문자열 "true"
+var hex_num = 10;
+var hex_num_string = hex_num.toString(16); // 16진수 문자열 "a"
+```
+*  String() 함수는 null이나 undefined도 사용 가능하다. (*toString은 불가능*)
+```
+var im_null = null;
+var im_null_string = String(im_null); // 문자열 "null"
+var im_undefined = null;
+var im_undefined_string = String(im_undefeind); // 문자열 "undefined"
+```
+
 ### Boolean
 ### Null
 ### Undefined
-### Ojbect
+### Symbol
 **[⬆ 목차](#목차)**
 
 ---

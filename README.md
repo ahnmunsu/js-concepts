@@ -877,6 +877,7 @@ function TodoModel(){
        }, 0);
     }
 }
+todoModel = TodoModel();
 todoModel.reload();
 ```
 **[⬆ 목차](#목차)**

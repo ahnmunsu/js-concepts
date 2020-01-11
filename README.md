@@ -711,8 +711,7 @@ Zero-fill right shift|a >>> b|a를 왼쪽에서 오른쪽으로 b 비트 만큼 
 *  원시(raw) 이진 데이터 엑세스를 위한 객체
 *  버퍼와 뷰로 나뉘어 짐
 *  버퍼(ArrayBuffer 객체에 의해 구현됨)는 데이터 부분(chunk, 덩어리)을 나타내는 객체
-*  뷰는 버퍼에 데이터를 읽거나 쓸 수 있도록 인터페이스를 제공
-*  자료형  
+*  형식화 배열 뷰
 
 이름 | 범위 | 설명 | 타입
 ---|---|---|---
@@ -726,7 +725,57 @@ Float32Array|-3.4 x 10의 38승 ~ 3.4 x 10의 38승|32-bit IEEE floating point n
 Float64Array|-1.79 x 10의 308승 ~ 1.79 x 10의 308승|64-bit IEEE floating point number|double
 
 ![typed_arrays](./img/typed_arrays.png)
-*  
+
+*  뷰는 버퍼에 데이터를 읽거나 쓸 수 있는 getter/setter API를 제공하는 저레벨 인터페이스
+*  버퍼 사용
+```js
+var buffer = new ArrayBuffer(16);
+
+if (buffer.byteLength === 16) {
+  console.log("Yes, it's 16 bytes.");
+} else {
+  console.log("Oh no, it's the wrong size!");
+}
+```
+*  뷰 사용
+```js
+var buffer = new ArrayBuffer(16);
+
+var int32View = new Int32Array(buffer);
+
+for (var i = 0; i < int32View.length; i++) {
+  int32View[i] = i * 2;
+}
+
+
+var int16View = new Int16Array(buffer);
+
+for (var i = 0; i < int16View.length; i++) {
+  console.log("Entry " + i + ": " + int16View[i]);
+}
+
+```
+
+*  복잡한 데이터 구조(체)와 작업
+  *  C 언어 구조체
+```c  
+  struct someStruct {
+  unsigned long id;
+  char username[16];
+  float amountDue;
+};
+```
+  *  위 구조체를 담을 수 있는 버퍼
+```js
+var buffer = new ArrayBuffer(24);
+
+// ... 버퍼 내의 데이터를 읽어들임 ...
+
+var idView = new Uint32Array(buffer, 0, 1);
+var usernameView = new Uint8Array(buffer, 4, 16);
+var amountDueView = new Float32Array(buffer, 20, 1);
+```
+
 **[⬆ 목차](#목차)**
 
 ---

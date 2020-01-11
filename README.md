@@ -696,7 +696,15 @@ requestAnimationFrame(function(timestamp){
 ---
 
 ## Bitwise Operators, Type Arrays and Array Buffers
-...
+연산자 | 사용법 | 설명
+---|---|--
+Bitwise AND|a & b|왼쪽과 오른쪽 피연사자의 비트가 1이면 각 비트를 1로 리턴
+Bitwise OR|a | b|왼쪽이나 오른쪽 피연산자의 비트가 1이면 각 비트를 1로 리턴
+Bitwise XOR|a ^ b|왼쪽이나 오른쪽 피연산자의 비트 중 한 쪽만 1이면 각 비트를 1로 리턴
+Bitwise NOT|~ a|피연산자의 모든 비트를 반전 시킴
+Left shift	a << b	a를 오른쪽에서 왼쪽으로 b 비트 만큼 이동 시키고 0으로 채움
+Sign-propagating right shift|a >> b|a를 왼쪽에서 오른쪽으로 b 비트 만큼 이동 시키고 양수일 경우 0으로, 음수일 경우 1로 채움
+Zero-fill right shift|a >>> b|a를 왼쪽에서 오른쪽으로 b 비트 만큼 이동 시키고 0으로 채움
 **[⬆ 목차](#목차)**
 
 ---

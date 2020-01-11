@@ -756,16 +756,14 @@ for (var i = 0; i < int16View.length; i++) {
 
 ```
 
-*  복잡한 데이터 구조(체)와 작업
-  *  C 언어 구조체
-```c  
+*  C 언어 구조체와 작업
+```c
   struct someStruct {
   unsigned long id;
   char username[16];
   float amountDue;
 };
 ```
-  *  위 구조체를 담을 수 있는 버퍼
 ```js
 var buffer = new ArrayBuffer(24);
 
@@ -787,7 +785,100 @@ var amountDueView = new Float32Array(buffer, 20, 1);
 ---
 
 ## Factories and Classes
-...
+### Class로 구현한 ToDo Model
+```js
+class TodoModel {
+    constructor(){
+        this.todos = [];
+        this.lastChange = null;
+    }
+    
+    addToPrivateList(){
+        console.log("addToPrivateList"); 
+    }
+    add() { console.log("add"); }
+    reload(){}
+}
+```
+### Factory function으로 구현한 ToDo Model
+```js
+function TodoModel(){
+    var todos = [];
+    var lastChange = null;
+        
+    function addToPrivateList(){
+        console.log("addToPrivateList"); 
+    }
+    function add() { console.log("add"); }
+    function reload(){}
+    
+    return Object.freeze({
+        add,
+        reload
+    });
+}
+```
+### Encapsulation
+*  Class의 모든 멤버, 필드, 메서드는 public이다.
+```js
+var todoModel = new TodoModel();
+console.log(todoModel.todos);     //[]
+console.log(todoModel.lastChange) //null
+todoModel.addToPrivateList();     //addToPrivateList
+```
+*  Factory function는 메서드만 노출되고 나머지 다른 것들은 모두 보호된다.
+```js
+var todoModel = TodoModel();
+console.log(todoModel.todos);     //undefined
+console.log(todoModel.lastChange) //undefined
+todoModel.addToPrivateList();     //todoModel.addToPrivateList is not a function
+```
+### this
+*  class를 사용할 때는 this가 context를 잃는 문제가 있다.
+```js
+class TodoModel {
+    constructor(){
+        this.todos = [];
+    }
+    
+    reload(){ 
+        setTimeout(function log() { 
+           console.log(this.todos);    //undefined
+        }, 0);
+    }
+}
+todoModel = TodoModel();
+todoModel.reload();
+```
+*  위 문제는 callback에 화살표 함수를 사용하여 해결 할 수 있다.
+```js
+class TodoModel {
+    constructor(){
+        this.todos = [];
+    }
+    
+    reload(){ 
+        setTimeout(() => { 
+           console.log(this.todos);    //undefined
+        }, 0);
+    }
+}
+todoModel = TodoModel();
+todoModel.reload();
+```
+*  Factory function은 this를 사용하지 않기 때문에 문제가 없다.
+```js
+function TodoModel(){
+    var todos = [];
+        
+    function reload(){ 
+        setTimeout(function log() { 
+           console.log(todos);        //[]
+       }, 0);
+    }
+}
+todoModel.reload();
+```
 **[⬆ 목차](#목차)**
 
 ---

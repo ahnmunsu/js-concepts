@@ -934,7 +934,7 @@ class User {
 let user1 = new User("John", 12);
 user1.increment();
 ```
-#### object를 반드시 new로 생성해야 하는 이유
+#### 새 object를 new로 생성해야 하는 이유
 ````js
 var userProfile = function(name, age) {
     this.userName = name;
@@ -957,6 +957,55 @@ console.log(window.userAge); // undefined
 console.log(user.userName); // uyeong
 console.log(user.userAge); // 27
 ````
+
+### instance
+*  object는 현실 세계의 개체를 프로그래밍으로 표현한 것이다.
+````js
+var person = {
+  name: 'Juan',
+  age: 40,
+  gender: 'male',
+  greeting: function() {
+    alert('Hi! I\'m ' + this.name + '.');
+  }
+};
+````
+*  이 object를 사용하기 위해 이 object의 instance를 생성해야 한다.
+```js
+var guy = new person();
+````
+*  위 명령어 실행으로 person type의 object를 저장할 수 있는 메모리가 할당 및 초기화 되고 이 instance를 참조 할 수 있는 guy 변수가 만들어 진다.
+
+### instanceof
+*  instanceof 는 비교 연산자이다.
+*  해당 변수가 사용하고 있는 prototype의 chain을 두 번째 인자와 쭉 비교해서 true나 false를 리턴한다.
+*  모든 object는 기본 object인 Object를 확장하기 때문에 instanceof Object는 true이다.
+```js
+var Person = function(){ 
+    this.name = "unikys"; 
+}; 
+
+var inst = new Person(); 
+inst instanceof Person; // === true 
+inst instanceof Object; // === true 
+typeof inst; // === 'object'
+```
+*  primitive type에는 사용할 수 없다.
+```js
+"foo" instanceof String; // === false 
+"foo" instanceof Object; // === false 
+true instanceof Boolean; // === false 
+true instanceof Object; // === false 
+
+[0,1] instanceof Array; // === true 
+{0:1} instanceof Object; // === true 
+
+var color1 = new String("red"); 
+var color2 = "red"; 
+color1 == color2; // === true 
+color1 instanceof String; // === true 
+color2 instanceof String; // === false
+```
 
 **[⬆ 목차](#목차)**
 

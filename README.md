@@ -903,14 +903,14 @@ new 키워드는 다음을 수행한다.
 #### ES5
 ```js
 function User(name, points) {
- this.name = name; 
- this.points = points;
+  this.name = name; 
+  this.points = points;
 }
 User.prototype.increment = function(){
- this.points++;
+  this.points++;
 }
 User.prototype.login = function() {
- console.log(“Please login.”)
+  console.log(“Please login.”)
 }
 
 let user1 = new User(“Dylan”, 6);

@@ -934,7 +934,29 @@ class User {
 let user1 = new User("John", 12);
 user1.increment();
 ```
+#### object를 반드시 new로 생성해야 하는 이유
+````js
+var userProfile = function(name, age) {
+    this.userName = name;
+    this.userAge = age;
+    return this;
+};
 
+var user = userProfile('uyeong', 27);
+console.log(user === window); // true
+console.log(window.userName); // uyeong
+console.log(window.userAge); // 27
+delete user; // true
+delete window.userName; // true
+delete window.userAge; // true
+
+var user = new userProfile('uyeong', 27);
+console.log(user === window); // false
+console.log(window.userName); // undefined
+console.log(window.userAge); // undefined
+console.log(user.userName); // uyeong
+console.log(user.userAge); // 27
+````
 
 **[⬆ 목차](#목차)**
 

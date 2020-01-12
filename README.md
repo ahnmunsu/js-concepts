@@ -891,7 +891,51 @@ todoModel.reload();
 ---
 
 ## new, Constructor, instanceof and Instances
-...
+### new
+new 연산자를 통해 개발자는 user-defined object type와 생성자 함수가 있는 built-in object type의 인스턴스를 만들 수 있다.  
+new 키워드는 다음을 수행한다.  
+
+*  새로운 object가 만들어진다.
+*  this를 이 object에 결합한다.
+*  생성자 함수의 prototype object는 새 object의 __proto__ property가 된다.
+*  함수로부터 object를 리턴한다.
+
+#### ES5
+```js
+function User(name, points) {
+ this.name = name; 
+ this.points = points;
+}
+User.prototype.increment = function(){
+ this.points++;
+}
+User.prototype.login = function() {
+ console.log(“Please login.”)
+}
+
+let user1 = new User(“Dylan”, 6);
+user1.increment();
+```
+#### ES6+
+```js
+class User {
+  constructor(name, points) {
+    this.name = name;
+    this.points = points;
+  }
+  increment () {
+    this.points++;
+  }
+  login () {
+    console.log("Please login.")
+  }
+}
+
+let user1 = new User("John", 12);
+user1.increment();
+```
+
+
 **[⬆ 목차](#목차)**
 
 ---

@@ -900,7 +900,7 @@ new 키워드는 다음을 수행한다.
 *  생성자 함수의 prototype object는 새 object의 ```__proto__``` property가 된다.
 *  함수로부터 object를 리턴한다.
 
-#### ES5
+#### ES5 class
 ```js
 function User(name, points) {
   this.name = name; 
@@ -916,7 +916,7 @@ User.prototype.login = function() {
 let user1 = new User(“Dylan”, 6);
 user1.increment();
 ```
-#### ES6+
+#### ES6 class
 ```js
 class User {
   constructor(name, points) {
@@ -1018,7 +1018,36 @@ color2 instanceof String; // === false
 ---
 
 ## Object.create and Object.assign
-...
+### Object.create
+*  주어진 prototype object와 property로 새로운 object를 만든다.
+*  상속을 구현할 때 사용한다.
+```
+Object.create(prototype[, propertiesObject])
+```
+```js
+function fruits() {
+    this.name = 'fruit 1';
+}
+
+function apple() {
+    fruits.call(this);
+}
+
+apple.prototype = Object.create(fruits.prototype);
+const app = new apple();
+console.log(app.name);  // "fruit 1"
+```
+### Object.assign
+*  열거할 수 있는 하나 이상의 source object로부터 target object로 속성을 복사할 때 사용한다.
+```js
+var obj1 = { a: 10, b: 10, c: 10 };
+var obj2 = { b: 20, c: 20 };
+var obj3 = { c: 30 };
+
+var new_obj = Object.assign({}, obj1, obj2, obj3);
+
+console.log(new_obj);  // Object { a: 10, b: 20, c: 30 }
+```
 **[⬆ 목차](#목차)**
 
 ---

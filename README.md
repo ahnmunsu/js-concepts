@@ -1075,9 +1075,34 @@ const fetchLoginToken = externalAPI.getUserToken // An impure function
 *  순수 함수는 side effect가 없다.
   *  함수는 외부 상태를 변경하거나 함수로 들어온 인자의 상태를 변경하지 않는다.  
   *  함수는 결과를 만들어 내기 위해서 인자에만 의존한다.
-*  Mutation은 source element를 변경하거나 영향을 주는 것을 의미한다.
+*  Mutation은 배열이나 object 같은 source element를 변경하거나 영향을 주는 것을 의미한다.
 *  프로그램에서 변화를 주는 것이 적을수록 추적해야 할 부분이 적어지므로 프로그램이 더 간단해 진다.  
+*  비순수 함수
+```js
+const cities = ['서울']
 
+function addElement(array, element) {
+  const newArray = array
+  newArray.push(element)
+  return newArray
+}
+
+const newCities = addElement(cities, '부산')
+console.log(newCities) // [ '서울', '부산' ]
+console.log(cities) // [ '서울', '부산' ]
+
+const newCities2 = addElement(cities, '부산')
+console.log(newCities2) // [ '서울', '부산', '부산' ]
+console.log(cities) // [ '서울', '부산', '부산' ]
+```
+*  순수 함수로 변경
+```js
+function addElement(array, element) {
+  const newArray = [...array]
+  newArray.push(element)
+  return newArray
+}
+```
 **[⬆ 목차](#목차)**
 
 ---

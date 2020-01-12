@@ -1059,7 +1059,25 @@ console.log(new_obj);  // Object { a: 10, b: 20, c: 30 }
 ---
 
 ## Pure Functions, Side Effects and State Mutation
-...
+*  Pure Function(순수 함수)는 결정론적이다.
+같은 입력에는 항상 같은 출력을 리턴한다.
+```js
+const add = (x, y) => x + y // A pure function
+```
+```js
+const magicLetter = '*'
+const createMagicPhrase = (phrase) => `${magicLetter}abra${phrase}` // An impure function
+```
+```js
+const fetchLoginToken = externalAPI.getUserToken // An impure function
+```
+*  Side Effect란 함수 외부 시스템의 변경이다.
+*  순수 함수는 side effect가 없다.
+  *  함수는 외부 상태를 변경하거나 함수로 들어온 인자의 상태를 변경하지 않는다.  
+  *  함수는 결과를 만들어 내기 위해서 인자에만 의존한다.
+*  Mutation은 source element를 변경하거나 영향을 주는 것을 의미한다.
+*  프로그램에서 변화를 주는 것이 적을수록 추적해야 할 부분이 적어지므로 프로그램이 더 간단해 진다.  
+
 **[⬆ 목차](#목차)**
 
 ---

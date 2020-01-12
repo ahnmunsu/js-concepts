@@ -897,7 +897,7 @@ new 키워드는 다음을 수행한다.
 
 *  새로운 object가 만들어진다.
 *  this를 이 object에 결합한다.
-*  생성자 함수의 prototype object는 새 object의 __proto__ property가 된다.
+*  생성자 함수의 prototype object는 새 object의 ```__proto__``` property가 된다.
 *  함수로부터 object를 리턴한다.
 
 #### ES5

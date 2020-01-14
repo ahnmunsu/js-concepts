@@ -1102,6 +1102,7 @@ bicycle.getWheels();  // 2를 출력합니다.
 ![object_vehicle_bicycle](./img/object_vehicle_bicycle.jpg)
 1. getWheels method를 실행할 경우 instance bicycle 안에 해당 method가 없기 때문에 prototype Bicycle이 참조하는 Vehicle을 확인한다.  
 2. prototype Vehicle 안에는 getWheels method가 있기 때문에 호출한다.  
+
 **[⬆ 목차](#목차)**
 
 ---

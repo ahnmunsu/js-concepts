@@ -1012,7 +1012,96 @@ color2 instanceof String; // === false
 ---
 
 ## Prototype Inheritance and Prototype Chain
-...
+### Prototype
+![prototype_function](./img/prototype_function.jpg)
+*  함수를 선언하면 위와 같이 function, prototype 2개의 객체가 생성된다.
+*  이 두 객체는 서로 참조 가능한 property를 가지고 있다.
+  *  function은 prototype을 통해 prototype 객체에 접근한다.
+  *  prototype은 constructor를 통해 function 객체에 접근한다.
+*  접근 뿐만이 아니라 변경도 가능하다.
+*  function 스스로는 prototype의 property에 접근할 수 없다.
+```js
+function Foo (){}
+Foo.prototype.proto_val = '원형 값';
+
+Foo.prototype.constructor.construct_val = "생성자 값";
+
+console.log(Foo.prototype.proto_val); //원형 값 을 출력
+console.log(Foo.construct_val); //생성자 값 을 출력
+console.log(Foo.proto_val); //?! undefined를 출력
+```
+
+![prototype_function_instance](./img/prototype_function_instance.jpg)
+*  instance화 되면 prototype의 property가 접근 할 수 있는 공간에 복제된다.
+```js
+function Foo (){} //함수 선언
+Foo.prototype.proto_val = "접근 할 수있다!!"; //Foo의 프로토타입을 설정
+
+var foo_instance = new Foo();  //Foo의 인스턴스를 생성
+
+console.log(foo_instance.proto_val); //접근 할 수있다!! 를 출력
+```
+*  instance 안의 property를 변경해도 ```__proto__``` 안의 property는 변하지 않는다.
+```js
+function Foo(){}
+
+Foo.prototype.proto_val = 100;    //프로토타입 속성을 설정합니다.
+
+var foo_instance = new Foo();  //Foo의 인스턴스를 생성합니다.
+
+console.log(foo_instance.proto_val); //프로토타입값 100을 출력을 합니다.
+
+foo_instance.proto_val -= 1;  // 인스턴스에서 proto_val을 1줄여봅니다.
+
+console.log(foo_instance.__proto__.proto_val); //프로토타입의 값은 그대로입니다.
+console.log(foo_instance.proto_val);  //하지만 인스턴스는 1이 줄은 99가 출력이 됩니다.
+```
+
+### Prototype Inheritance
+![prototype_inheritance](./img/prototype_inheritance.jpg)
+*  함수를 선언하는 순간 Object.prototype을 상속하게 된다.
+*  prototype chain은 prototype이 다른 prototype을 참조하는 행위가 반복되는 것이다.
+```js
+Object.prototype.say = function(){
+    console.log(this.greet); //Object의 프로토타입에 say라는 메서드를 추가합니다.
+}
+
+function Foo (){
+    this.greet = "hello world";    // Foo 생성자에서 greet이라는 속성을 추가합니다.
+}
+
+var foo_instance = new Foo();     //인스턴스를 생성합니다.
+
+foo_instance.say(); //hello world를 출력합니다.
+```
+1. instance 내에 say가 있는지 확인한다.  
+2. 없다면 instance가 참조하는 prototype에 say가 있는지 확인한다.  
+3. 없다면 prototype이 참조하는 prototype에 say가 있는지 확인한다.  
+4. 이 과정을 반복하다가 null이 나오면 중단하고 say에 undefined를 할당한다.  
+5. say를 찾을 경우 say를 호출한다.  
+
+*  다른 객체끼리의 상속
+```js
+function Vehicle (){}
+
+Vehicle.prototype.wheels = 4;
+Vehicle.prototype.getWheels = function(){ //Vehicle의 프로토타입의 속성을 설정합니다.
+    console.log(this.wheels);
+}
+
+function Bicycle(){
+    this.wheels = 2;
+}
+
+Bicycle.prototype.__proto__ = Vehicle.prototype; //Bicycle의 프로토타입이  Vehicle의 프로토타입을 참조하게 합니다.
+
+var bicycle = new Bicycle(); //객체를 생성합니다. 
+
+bicycle.getWheels();  // 2를 출력합니다.
+```
+![object_vehicle_bicycle](./img/object_vehicle_bicycle.jpg)
+1. getWheels method를 실행할 경우 instance bicycle 안에 해당 method가 없기 때문에 prototype Bicycle이 참조하는 Vehicle을 확인한다.  
+2. prototype Vehicle 안에는 getWheels method가 있기 때문에 호출한다.  
 **[⬆ 목차](#목차)**
 
 ---

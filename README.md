@@ -1250,15 +1250,16 @@ console.log(decreaser()); // -2
 ---
 
 ## Collections and Generators
+### Colections
 *  자바스크립트에는 다음과 같은 데이터 컬렉션이 있다.
   *  Indexed Collection : Arrays, Typed Array
   *  Keyed Collection : Objects, Map, Set, Weak Map, Weak Set
 *  ES6에서 추가된 컬렉션 : Typed Array, Map, Set, Weak Map, Weak Set
-### Set
+#### Set
 *  Set은 value를 key값으로 갖는 컬렉션이다.
 *  Set은 값의 추가, 삭제 등 수정이 가능하다.
 *  Set은 값이 중복되지 않는다.
-#### Set 메서드 사용예  
+##### Set 메서드 사용예  
 *  size : 크기
 *  has : 값 확인
 *  add : 값 추가
@@ -1291,7 +1292,7 @@ animals.forEach(animal => {
 animals.clear();
 console.log(animals.size); // 0
 ```
-#### array를 사용한 Set 초기화
+##### array를 사용한 Set 초기화
 ```js
 let myAnimals = new Set(['🐷', '🐢', '🐷', '🐷']);
 
@@ -1309,14 +1310,14 @@ myAnimals.forEach(animal => {
 // ["🐨", "🐑"]
 // Object { name: "Rud", type: "🐢" }
 ```
-#### string을 사용한 Set 초기화
+##### string을 사용한 Set 초기화
 ```js
 console.log('Only unique characters will be in this set.'.length); // 43
 
 let sentence = new Set('Only unique characters will be in this set.');
 console.log(sentence.size); // 18
 ```
-#### for...of를 사용한 loop
+##### for...of를 사용한 loop
 ```js
 let moreAnimals = new Set(['🐺', '🐴', '🐕', '🐇']);
 
@@ -1329,7 +1330,7 @@ for (let animal of moreAnimals) {
 // Howdy 🐕
 // Howdy 🐇
 ```
-#### keys와 values 메서드(동일한 기능)
+##### keys와 values 메서드(동일한 기능)
 ```js
 let partyItems = new Set(['🍕', '🍾', '🎊']);
 let items = partyItems.values();
@@ -1357,10 +1358,10 @@ console.log(items.next().done);
 // true
 ```
 **[⬆ 목차](#목차)**
-### Map
+#### Map
 *  Map은 Key - Value 쌍으로 이루어진 컬렉션이다.
 *  Map은 object와 다르게 모든 타입을 key로 사용할 수 있다(object와 function까지도...)
-#### Map 메서드 사용예  
+##### Map 메서드 사용예  
 *  size : 크기
 *  has : 값 확인
 *  set : 값 추가
@@ -1403,7 +1404,7 @@ things.set(myMap, 'Oh gosh!');
 things.size; // 4
 things.get(myMap); // 'Oh gosh!'
 ```
-#### Map을 array로 초기화
+##### Map을 array로 초기화
 ```js
 const funArray = [
   ['🍾', 'Champagne'],
@@ -1414,7 +1415,7 @@ const funArray = [
 let funMap = new Map(funArray);
 funMap.get('🍾'); // Champagne
 ```
-#### Map 반복자 
+##### Map 반복자 
 *  for...of와 array destructuring을 통해
 ```js
 let activities = new Map();
@@ -1439,7 +1440,7 @@ activities.forEach((value, key) => {
   console.log(`Activity ${key} is ${value}`);
 });
 ```
-### WeakSet, WeakMap
+#### WeakSet, WeakMap
 *  자바스크립트의 garbage collection은 더 이상 참조되지 않는 object가 자동으로 삭제되고 그 resource를 되찾는 메모리 관리 형태이다.
 *  Map과 Set의 object 참조는 강하게 결합되어 있어 garbage collection을 허용하지 않는다.
 *  WeakSet과 WeakMap은 더 이상 필요하지 않는 object를 메모리에서 지울 수 있다.
@@ -1465,6 +1466,131 @@ yesdoing.set(job, 'air'); // 값으로는 어떤 타입이라도 들어올 수 �
 
 yesdoing.has(job); // True
 yesdoing.delete(job) // key를 삭제합니다.
+```
+### Generator
+*  Generator는 ES6부터 제공되는 기능이다.
+*  Generator는 ```(*)``` 키워드를 사용하여 구현할 수 있다.
+*  일반 함수는 매 실행마다 같은 흐름으로 코드를 실행하지만 Generator는 실행 중에 중단 및 값 반환을 했다가 다시 중단 지점부터 실행할 수 있다.
+![generator_vs_function](./img/generator_vs_function.PNG)
+#### yield와 next()
+```js
+function* gen() {
+    console.log("첫 next");
+    yield 1;
+    console.log("두번 째 next");
+    yield 2;
+    console.log("세번 째 next");
+    yield 3;
+    console.log("네번 째 next");
+}
+
+var g = gen(); // 제너레이터 객체 반환
+
+console.log(g.next()); // {value: 1, done: false}
+console.log(g.next()); // {value: 2, done: false}
+console.log(g.next()); // {value: 3, done: false}
+console.log(g.next()); // {value: undefined, done: true}
+```
+```js
+첫 next
+{value: 1, done: false}
+두번 째 next
+{value: 2, done: false}
+세번 째 next
+{value: 3, done: false}
+네번 째 next
+{value: undefined, done: true}
+```
+#### next(parameter)
+```js
+function* gen() {
+    var bar = yield 'foo';
+    console.log(bar); // bar
+}
+
+var g = gen();
+
+console.log(g.next()); // {value: 'foo', done: false}
+console.log(g.next('bar'));
+```
+```js
+{value: "foo", done: false}
+bar
+{value: undefined, done: true}
+```
+#### yield *
+```js
+function* gen1() {
+    yield 1;
+    yield 2;
+}
+
+function* gen2() {
+    // yield* 가  gen1 을 위임한다.
+    yield* gen1();
+    yield 3;
+}
+
+var g = gen2();
+
+console.log(g.next()); // {value: 1, done: false}
+console.log(g.next()); // {value: 2, done: false}
+console.log(g.next()); // {value: 3, done: false}
+console.log(g.next()); // {value: undefined, done: true}
+```
+#### return()과 throw()
+```js
+function* gen() {
+    yield 1;
+    yield 2;
+    yield 3;
+}
+
+var g = gen();
+
+console.log(g.next()); // {value: 1, done: false}
+console.log(g.return(123)); // {value: 123, done: true}
+
+var g2 = gen();
+console.log(g2.next()); // {value: 1, done: false}
+console.log(g2.throw("error 호출")); // 에러 호출, 제너레이터 종료
+```
+#### Generator 사용 목적
+*  Lazy Evaluation(느긋한 계산법)
+    *  계산의 결과값이 필요할 때까지 계산을 늦추는 방법
+    *  값이 필요하지 않으면 존재하지 않고, 요청시 계산된다.
+```js
+// 일반적인 방법의 코드
+let arr = [];
+for (let i = 0; i < 100; i++) {
+    arr.push(i);
+}
+```
+```js
+// Generator로 구현한 코드
+function* arr() {
+    let i = 0;
+    while (i < 100) {
+        yield i++;
+    }
+}
+console.log([...arr()]);
+```
+*  비동기 프로그래밍을 동기적으로 작성하고 관리하기 위해서
+*  Infinite iterator
+```js
+function* idMaker() {
+    var index = 0;
+    while(true)
+        yield index++;
+}
+
+var gen = idMaker(); // "Generator { }"
+
+console.log(gen.next().value); // 0
+console.log(gen.next().value); // 1
+console.log(gen.next().value); // 2
+// ...
 ```
 ---
 

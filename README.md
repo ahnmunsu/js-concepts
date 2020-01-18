@@ -1250,9 +1250,222 @@ console.log(decreaser()); // -2
 ---
 
 ## Collections and Generators
-...
-**[⬆ 목차](#목차)**
+*  자바스크립트에는 다음과 같은 데이터 컬렉션이 있다.
+  *  Indexed Collection : Arrays, Typed Array
+  *  Keyed Collection : Objects, Map, Set, Weak Map, Weak Set
+*  ES6에서 추가된 컬렉션 : Typed Array, Map, Set, Weak Map, Weak Set
+### Set
+*  Set은 value를 key값으로 갖는 컬렉션이다.
+*  Set은 값의 추가, 삭제 등 수정이 가능하다.
+*  Set은 값이 중복되지 않는다.
+#### Set 메서드 사용예  
+*  size : 크기
+*  has : 값 확인
+*  add : 값 추가
+*  delete : 값 삭제
+*  forEach : 반복자
+*  clear : 모든 값 삭제
+```js
+let animals = new Set();
 
+animals.add('🐷');
+animals.add('🐼');
+animals.add('🐢');
+animals.add('🐿');
+console.log(animals.size); // 4
+animals.add('🐼');
+console.log(animals.size); // 4
+
+console.log(animals.has('🐷')); // true
+animals.delete('🐷');
+console.log(animals.has('🐷')); // false
+
+animals.forEach(animal => {
+  console.log(`Hey ${animal}!`);
+});
+
+// Hey 🐼!
+// Hey 🐢!
+// Hey 🐿!
+
+animals.clear();
+console.log(animals.size); // 0
+```
+#### array를 사용한 Set 초기화
+```js
+let myAnimals = new Set(['🐷', '🐢', '🐷', '🐷']);
+
+myAnimals.add(['🐨', '🐑']);
+myAnimals.add({ name: 'Rud', type: '🐢' });
+console.log(myAnimals.size); // 4
+
+myAnimals.forEach(animal => {
+  console.log(animal);
+});
+
+
+// 🐷
+// 🐢
+// ["🐨", "🐑"]
+// Object { name: "Rud", type: "🐢" }
+```
+#### string을 사용한 Set 초기화
+```js
+console.log('Only unique characters will be in this set.'.length); // 43
+
+let sentence = new Set('Only unique characters will be in this set.');
+console.log(sentence.size); // 18
+```
+#### for...of를 사용한 loop
+```js
+let moreAnimals = new Set(['🐺', '🐴', '🐕', '🐇']);
+
+for (let animal of moreAnimals) {
+  console.log(`Howdy ${ animal }`);
+}
+
+// Howdy 🐺
+// Howdy 🐴
+// Howdy 🐕
+// Howdy 🐇
+```
+#### keys와 values 메서드(동일한 기능)
+```js
+let partyItems = new Set(['🍕', '🍾', '🎊']);
+let items = partyItems.values();
+
+console.log(items.next());
+console.log(items.next());
+console.log(items.next());
+console.log(items.next().done);
+
+// Object {
+//   done: false,
+//   value: "🍕"
+// }
+
+// Object {
+//   done: false,
+//   value: "🍾"
+// }
+
+// Object {
+//   done: false,
+//   value: "🎊"
+// }
+
+// true
+```
+**[⬆ 목차](#목차)**
+### Map
+*  Map은 Key - Value 쌍으로 이루어진 컬렉션이다.
+*  Map은 object와 다르게 모든 타입을 key로 사용할 수 있다(object와 function까지도...)
+#### Map 메서드 사용예  
+*  size : 크기
+*  has : 값 확인
+*  set : 값 추가
+*  get : 값 가져오기
+*  delete : 값 삭제
+*  clear : 모든 값 삭제
+```js
+let things = new Map();
+
+const myFunc = () => '🍕';
+
+things.set('🚗', 'Car');
+things.set('🏠', 'House');
+things.set('✈️', 'Airplane');
+things.set(myFunc, '😄 Key is a function!');
+
+things.size; // 4
+
+things.has('🚗'); // true
+
+things.has(myFunc) // true
+things.has(() => '🍕'); // false, not the same reference
+things.get(myFunc); // '😄 Key is a function!'
+
+things.delete('✈️');
+things.has('✈️'); // false
+
+things.clear();
+things.size; // 0
+
+// setting key-value pairs is chainable
+things.set('🔧', 'Wrench')
+      .set('🎸', 'Guitar')
+      .set('🕹', 'Joystick');
+
+const myMap = new Map();
+
+// Even another map can be a key
+things.set(myMap, 'Oh gosh!');
+things.size; // 4
+things.get(myMap); // 'Oh gosh!'
+```
+#### Map을 array로 초기화
+```js
+const funArray = [
+  ['🍾', 'Champagne'],
+  ['🍭', 'Lollipop'],
+  ['🎊', 'Confetti'],
+];
+
+let funMap = new Map(funArray);
+funMap.get('🍾'); // Champagne
+```
+#### Map 반복자 
+*  for...of와 array destructuring을 통해
+```js
+let activities = new Map();
+
+activities.set(1, '🏂');
+activities.set(2, '🏎');
+activities.set(3, '🚣');
+activities.set(4, '🤾');
+
+for (let [nb, activity] of activities) {
+  console.log(`Activity ${nb} is ${activity}`);
+}
+
+// Activity 1 is 🏂
+// Activity 2 is 🏎
+// Activity 3 is 🚣
+// Activity 4 is 🤾
+```
+*  forEach를 통해
+```js
+activities.forEach((value, key) => {
+  console.log(`Activity ${key} is ${value}`);
+});
+```
+### WeakSet, WeakMap
+*  자바스크립트의 garbage collection은 더 이상 참조되지 않는 object가 자동으로 삭제되고 그 resource를 되찾는 메모리 관리 형태이다.
+*  Map과 Set의 object 참조는 강하게 결합되어 있어 garbage collection을 허용하지 않는다.
+*  WeakSet과 WeakMap은 더 이상 필요하지 않는 object를 메모리에서 지울 수 있다.
+*  Weak 컬렉션은 일반 컬렉션과 사용법은 비슷하지만 사용 가능한 메서드 수가 적다.
+*  WeakSet 사용예
+```js
+const yesdoing = new WeakSet(); // WeakMap을 생성합니다. 
+const age = {}; // 값은 반드시 객체여야 합니다. 
+
+yesdoing.add(age); // 값을 추가합니다.
+
+yesdoing.has(age); // True
+yesdoing.delete(age) // 값을 삭제합니다.
+```
+*  WeakMap 사용예
+```js
+const yesdoing = new WeakMap(); // WeakMap을 생성합니다. 
+const age = {}; // 키는 반드시 객체여야 합니다.
+const job = {}; // 키는 반드시 객체여야 합니다.
+
+yesdoing.set(age, 11111); // 키 - 값을 설정합니다.
+yesdoing.set(job, 'air'); // 값으로는 어떤 타입이라도 들어올 수 있습니다. 
+
+yesdoing.has(job); // True
+yesdoing.delete(job) // key를 삭제합니다.
+```
 ---
 
 ## Promises

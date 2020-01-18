@@ -1204,7 +1204,41 @@ function addElement(array, element) {
 ---
 
 ## High Order Functions
-...
+*  High Order Function(고차 함수)는 함수를 인자로 전달 받거나 함수를 결과로 반환하는 함수를 말한다.
+*  고차 함수는 외부 상태 변경이나 가변(mutable) 데이터를 피하고 불변성(Immutability)을 지향하는 함수형 프로그래밍에 기반을 두고 있다.
+```js
+// 함수를 인자로 전달받고 함수를 반환하는 고차 함수
+function makeCounter(predicate) {
+  // 자유 변수. num의 상태는 유지되어야 한다.
+  let num = 0;
+  // 클로저. num의 상태를 유지한다.
+  return function () {
+    // predicate는 자유 변수 num의 상태를 변화시킨다.
+    num = predicate(num);
+    return num;
+  };
+}
+
+// 보조 함수
+function increase(n) {
+  return ++n;
+}
+
+// 보조 함수
+function decrease(n) {
+  return --n;
+}
+
+// makeCounter는 함수를 인수로 전달받는다. 그리고 클로저를 반환한다.
+const increaser = makeCounter(increase);
+console.log(increaser()); // 1
+console.log(increaser()); // 2
+
+// makeCounter는 함수를 인수로 전달받는다. 그리고 클로저를 반환한다.
+const decreaser = makeCounter(decrease);
+console.log(decreaser()); // -1
+console.log(decreaser()); // -2
+```
 **[⬆ 목차](#목차)**
 
 ---

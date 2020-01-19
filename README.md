@@ -1656,8 +1656,6 @@ async function fetchAuthorName(postId) {
 fetchAuthorName(1).then(name => console.log("name:", name));
 ```
 **[⬆ 목차](#목차)**
-
-*
 ---
 
 ## Data Structures
@@ -1667,7 +1665,48 @@ fetchAuthorName(1).then(name => console.log("name:", name));
 ---
 
 ## Expensive Operation and Big O Notation
-...
+### Expensive Operation
+####  Looping Over an Array
+1만개의 랜덤 수를 합하는 시험 결과
+*  For Loop, average loop time: ~10 microseconds
+*  For-Of, average loop time: ~110 microseconds
+*  ForEach, average loop time: ~77 microseconds
+*  While, average loop time: ~11 microseconds
+*  Reduce, average loop time: ~113 microseconds
+#### Duplicating an Array
+1만개의 요소를 가진 1만개의 array를 복사하는 시험 결과
+*  Duplicate using Slice(`arr.slice()`), average: ~367 microseconds
+*  Duplicate using Map(`arr.map(x =>x)`, ES5), average: ~469 microseconds
+*  Duplicate using Spread(`[…arr]`, ES6), average: ~512 microseconds
+*  Duplicate using Concat(`[].concat(arr)`), average: ~366 microseconds
+*  Duplicate using Array From(`Array.from(arr)`), average: ~1,436 microseconds
+*  Duplicate manually, average: ~412 microseconds
+#### Iterating Objects
+각각 1천개의 랜덤 key와 value를 가진 1만개의 object를 iteration하는 시험 결과
+*  Object iterate For-In(`for(let key in obj)`), average: ~240 microseconds
+*  Object iterate Keys For Each(`Object.keys(obj)`, ES6), average: ~294 microseconds
+*  Object iterate Entries For-Of(`Object.entries(obj)`, ES8), average: ~535 microseconds
+
+### Big O Notation
+*  big-O는 알고리즘의 효율성을 나타내는 지표이다.
+*  big-O 표기법은 보통 알고리즘의 시간 복잡도와 공간 복잡도를 나타내는데 주로 사용된다.
+*  Big-O 표기법은 데이터 입력값(n)의 크기에 따라 영향을 받는다.
+#### O(1) - Constant Time Complexity
+*  입력값(n)의 크기와 상관없이 항상 일정한 시간 패턴을 보이는 것을 `O(1)`이라고 표기한다.
+*  JavaScript 함수에 대한 최상의 시나리오로 간주된다.
+![big_o_o(1)](./img/big_o_o(1).PNG)
+#### O(n) - Linear
+*  입력값(n)의 크기에 따라 시간 패턴이 일정하게 늘어나는 것을 `O(n)`이라고 표기한다.
+*  배열의 내용을 인쇄한다고 가정했을 때 백만개의 요소를 복사하면 백만번의 반복이 필요하다.
+![big_o_o(n)](./img/big_o_o(n).PNG)
+#### O(log n) – Logarithmic
+*  입력값(n)의 크기에 따라 실행 시간이 증가하지만 실행 시간이 증가되는 속도는 감소하는 패턴을 보이는 것을 `O(log n)`이라고 표기한다.
+*  이진 트리 탐색을 예로 들 수 있다.
+![big_o_o(logn)](./img/big_o_o(logn).PNG)
+#### O(n^2) – Quadratic
+*  입력값(n)의 크기에 따라 실행 시간이 증가하는 속도가 점점 급격히 증가하는 패턴을 보이는 것을 `O(n^2)`이라고 표기한다.
+*  2중 for 문을 사용하면서 정렬이 되어있지 않은 요소들을 하나하나 탐색하는 방법을 예로 들 수 있다.
+![big_o_o(n^2)](./img/big_o_o(n^2).PNG)
 **[⬆ 목차](#목차)**
 
 ---

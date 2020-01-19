@@ -1601,9 +1601,63 @@ console.log(gen.next().value); // 2
 ---
 
 ## async/await
-...
+*  Promise 단점을 해결하기 위해 ES7(ES2017)에서 async/await 키워드가 추가되었다.
+*  async/await 키워드를 사용하면 비동기 코드를 마치 동기 코드처럼 __보이게__ 작성할 수 있다.
+### async/await 사용법
+```js
+// Promise를 사용한 코드
+function fetchAuthorName(postId) {
+  return fetch(`https://jsonplaceholder.typicode.com/posts/${postId}`)
+    .then(response => response.json())
+    .then(post => post.userId)
+    .then(userId => {
+      return fetch(`https://jsonplaceholder.typicode.com/users/${userId}`)
+        .then(response => response.json())
+        .then(user => user.name);
+    });
+}
+
+fetchAuthorName(1).then(name => console.log("name:", name));
+```
+```js
+// async/await를 사용한 코드
+async function fetchAuthorName(postId) {
+  const postResponse = await fetch(`https://jsonplaceholder.typicode.com/posts/${postId}`);
+  const post = await postResponse.json();
+  const userId = post.userId;
+  const userResponse = await fetch(`https://jsonplaceholder.typicode.com/users/${userId}`)
+  const user = await userResponse.json();
+  return user.name;
+}
+
+fetchAuthorName(1).then(name => console.log("name:", name));
+```
+*  async 키워드를 function 앞에 붙인다.
+*  Promise를 리턴하는 모든 비동기 함수 호출부 앞에는 await 키워드를 추가한다.
+*  await 키워드는 async 키워드가 붙어있는 함수 내부에서만 사용 가능하다.
+*  async 키워드가 붙어 있는 함수를 호출하면 명시적으로 Promise 객체를 생성하여 리턴하지 않아도 Promise 객체가 리턴된다.
+### async/await 예외 처리
+```js
+async function fetchAuthorName(postId) {
+    const postResponse = await fetch(`https://jsonplaceholder.typicode.com/posts/${postId}`);
+    const post = await postResponse.json();
+    const userId = post.userId;
+    
+    try {
+        const userResponse = await fetch(`https://jsonplaceholder.typicode.com/users/${userId}`)
+        const user = await userResponse.json();
+        return user.name;
+    } catch (err) {
+        console.log('Faile to fetch user:', err);
+        return "Unknown";
+    }
+}
+
+fetchAuthorName(1).then(name => console.log("name:", name));
+```
 **[⬆ 목차](#목차)**
 
+*
 ---
 
 ## Data Structures

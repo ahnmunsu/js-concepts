@@ -1706,7 +1706,8 @@ fetchAuthorName(1).then(name => console.log("name:", name));
 #### O(n^2) – Quadratic
 *  입력값(n)의 크기에 따라 실행 시간이 증가하는 속도가 점점 급격히 증가하는 패턴을 보이는 것을 `O(n^2)`이라고 표기한다.
 *  2중 for 문을 사용하면서 정렬이 되어있지 않은 요소들을 하나하나 탐색하는 방법을 예로 들 수 있다.  
-![big_o_o(n^2)](./img/big_o_o(n^2).PNG)
+![big_o_o(n^2)](./img/big_o_o(n^2).PNG)  
+
 **[⬆ 목차](#목차)**
 
 ---

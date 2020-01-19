@@ -1719,9 +1719,86 @@ fetchAuthorName(1).then(name => console.log("name:", name));
 ---
 
 ## Inheritance, Polymorphism and Code Reuse
-...
-**[⬆ 목차](#목차)**
+### Inheritance (Class-Style)
+ES6에서는 C++와 Java와 유사한 클래스 문법을 공개하여 클래스를 더 쉽고 명확하게 재활용 할 수 있게 되었다.
+```js
+class Person {
+  constructor(first, last, age, gender, interests) {
+    this.name = {
+      first,
+      last
+    };
+    this.age = age;
+    this.gender = gender;
+    this.interests = interests;
+  }
 
+  greeting() {
+    console.log(`Hi! I'm ${this.name.first}`);
+  };
+
+  farewell() {
+    console.log(`${this.name.first} has left the building. Bye for now!`);
+  };
+}
+```
+```js
+class Teacher extends Person {
+  constructor(first, last, age, gender, interests, subject, grade) {
+    super(first, last, age, gender, interests);
+    // subject and grade are specific to Teacher
+    this._subject = subject;
+    this.grade = grade;
+  }
+
+  get subject() {
+    return this._subject;
+  }
+
+  set subject(newSubject) {
+    this._subject = newSubject;
+  }
+}
+```
+### Polymorphism
+*  다형성은 특정 기능을 선언(설계) 부분과 구현(동작) 부분으로 분리함으로써 하나의 행동을 여러 방식으로 할 수 있게 한다.
+*  일반 객체지향 프로그래밍의 다형성 관련 문법은 다음과 같다.
+    *  다형성 선언 부분 : 인터페이스와 추상 클래스
+    *  다형성 구현 부분 : 클래스
+*  자바스크립트는 다형성과 관련된 문법이 별도로 제공되지는 않는다.
+    *  다른 객체에서 동일한 메서드를 호출하는 기능을 제공한다.
+    *  자바스크립트는 type-safe 언어가 아니므로 모든 유형의 데이터 멤버를 메서드와 함께 전달할 수 있다.
+```js
+	var shape = function (){};
+	shape.prototype.draw = function(){
+		return "i am generic shape";
+	}
+    
+	//circle
+	var circle = function(){}
+	circle.prototype = Object.create(shape.prototype);
+	circle.prototype.draw= function(){
+		return "i am a circle";
+	}
+    
+	//triangle
+	var triangle = function (){}
+	triangle.prototype = Object.create(shape.prototype);
+	triangle.prototype.draw= function(size){
+		return "this is triangle";
+	}
+    
+	//printing shapes
+	var shapes = [new shape(), new circle(), new triangle(23)];
+	shapes.forEach (function (shapeList){
+		console.log(shapeList.draw());
+	});
+```
+### Code Reuse
+*  자바스크립트에서 코드를 재사용하는 방법 중 가장 대중적인 방법은 상속이다.
+*  상속 이외에도 메서드 빌려오기, 메서드와 객체 연결하기, 속성 복사, 여러 객체의 속성 합성 등의 방법이 있다.
+
+**[⬆ 목차](#목차)**
 ---
 
 ## Design Patterns

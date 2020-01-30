@@ -1849,6 +1849,7 @@ var mondeo = new Car("Ford Mondeo", 2010, 5000);
 
 console.log(civic.toString());
 console.log(mondeo.toString());
+console.log(civic.toString === mondeo.toString); // false
 ```
 *  생성자와 prototype 사용
 ```js
@@ -1867,8 +1868,178 @@ var mondeo = new Car("Ford Mondeo", 2010, 5000);
 
 console.log(civic.toString());
 console.log(mondeo.toString());
+console.log(civic.toString === mondeo.toString); // true
 ```
 
+### 모듈 패턴
+```js
+var personModule = (function(){
+  var firstName;
+  var lastName;
+  
+  return{
+    setName(f,l){
+      firstName = f;
+      lastName = l;
+    },
+    getName(){
+      return firstName + " " + lastName;
+    }
+  }
+  
+})();
+
+personModule.setName('akash','pal')
+personModule.getName() //"akash pal"
+```
+```js
+var testModule = (function() {
+  var counter = 0;
+  
+  return {
+    incrementCounter: function() {
+      return counter++;
+    }
+    resetCounter: function() {
+      console.log("counter value prior to reset: " + counter);
+      counter = 0;
+    }
+  };
+})();
+
+testModule.incrementCounter();
+testModule.resetCounter();
+```
+
+### 노출(Revealing) 모듈 패턴
+```js
+var personModule = (function(){
+  var firstName;
+  var lastName;
+  
+  function setName(f,l){
+    firstName = f;
+    lastName = l;
+  }
+  
+  function getName(){
+    return firstName + " " + lastName;
+  }
+  
+  return {
+    setName:setName,
+    getName:getName
+  };
+})();
+
+personModule.setName('akash','pal');
+personModule.getName(); //"akash pal"
+```
+
+### 싱글톤(Singleton) 패턴
+```js
+var singleton = (function() {
+  var instance;
+  
+  function init(){    
+    var name;
+
+    this.setName = function(name) {
+       this.name = name;
+    }
+    
+    this.getName = function() {
+      return this.name;
+    }
+    
+    return {
+      setName: setName,
+      getName: getName
+    }
+  }
+  
+  function getInstance() {
+    if(!instance) {
+      instance = init();
+    }
+    return instance;
+  }
+
+  return {
+    getInstance:getInstance
+  }
+})();
+
+var one = singleton.getInstance();
+var two = singleton.getInstance();
+
+//the two instance are same
+one == two //true
+
+one.setName('Akash');
+two.getName(); //"Akash"
+```
+
+### 옵저버(Observer) 패턴
+*  옵저버 패턴은 이벤트 처리 및 위임에 사용된다.
+*  Subject는 Observer의 collection을 유지한다.
+*  Subject는 이벤트가 발생할 때마다 Observer에게 알린다.
+*  구현
+```js
+function Subject() {
+    this.observers = []; // Observers listening to the subject
+    
+    this.registerObserver = function(observer) {
+        // Add an observer if it isn't already being tracked
+        if (this.observers.indexOf(observer) === -1) {
+            this.observers.push(observer);
+        }
+    };
+
+    this.unregisterObserver = function(observer) {
+        // Removes a previously registered observer
+        var index = this.observers.indexOf(observer);
+        if (index > -1) {
+            this.observers.splice(index, 1);
+        }
+    };
+
+    this.notifyObservers = function(message) {
+        // Send a message to all observers
+        this.observers.forEach(function(observer) {
+            observer.notify(message);
+        });
+    };
+}
+
+function Observer() {
+    this.notify = function(message) {
+        // Every observer must implement this function
+    };
+}
+```
+*  사용예
+```js
+function Employee(name) {
+    this.name = name;
+
+    // Implement `notify` so the subject can pass us messages
+    this.notify = function(meetingTime) {
+        console.log(this.name + ': There is a meeting at ' + meetingTime);
+    };
+}
+
+var bob = new Employee('Bob');
+var jane = new Employee('Jane');
+var meetingAlerts = new Subject();
+meetingAlerts.registerObserver(bob);
+meetingAlerts.registerObserver(jane);
+meetingAlerts.notifyObservers('4pm');
+
+// Output:
+// Bob: There is a meeting at 4pm
+// Jane: There is a meeting at 4pm
+```
 **[⬆ 목차](#목차)**
 
 ---

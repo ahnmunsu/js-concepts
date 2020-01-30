@@ -1807,7 +1807,35 @@ class Teacher extends Person {
 *  과거의 소프트웨어 개발 과정에서 발견된 설계의 노하우를 축적하여 이름을 붙여, 이후에 재이용하기 좋은 형태로 특정의 규약을 묶어서 정리한 것이다.
 *  알고리즘과 같이 프로그램 코드로 바로 변환될 수 있는 형태는 아니지만, 특정한 상황에서 구조적인 문제를 해결하는 방식을 설명해 준다.
 
+### 생성자 패턴
+*  객체 생성
+```js
+var newObject = {};
+// or
+var newObject = Object.create(Object.prototype);
+// or
+var newObject = new Object();
+```
+*  생성자 사용법
+```js
+function person(firstName, lastName){  
+  this.firstName = firstName;  
+  this.lastName = lastName;  
+  this.fullName = function(){
+    return this.firstName + " " + this.lastName;
+  }
+}
 
+var person1 = new person('Akash', 'Pal');
+var person2 = new person('Black', 'Panther');
+console.log(person1.fullName()); //"Akash Pal"
+console.log(person2.fullName()); //"Black Panther"
+console.log(person1) //{firstName: "Akash", lastName: "Pal", fullName: ƒ}
+console.log(person2) //{firstName: "Black", lastName: "Panther", fullName: ƒ}
+```
+```js
+
+```
 **[⬆ 목차](#목차)**
 
 ---

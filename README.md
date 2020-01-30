@@ -1830,12 +1830,45 @@ var person1 = new person('Akash', 'Pal');
 var person2 = new person('Black', 'Panther');
 console.log(person1.fullName()); //"Akash Pal"
 console.log(person2.fullName()); //"Black Panther"
-console.log(person1) //{firstName: "Akash", lastName: "Pal", fullName: ƒ}
-console.log(person2) //{firstName: "Black", lastName: "Panther", fullName: ƒ}
+console.log(person1); //{firstName: "Akash", lastName: "Pal", fullName: ƒ}
+console.log(person2); //{firstName: "Black", lastName: "Panther", fullName: ƒ}
 ```
 ```js
+function Car(model, year, miles) {
+  this.model = model;
+  this.year = year;
+  this.miles = miles;
+  
+  this.toString = function() {
+    return this.model + " has done " + this.miles + " miles";
+  }
+}
 
+var civic = new Car("Honda Civic", 2009, 20000);
+var mondeo = new Car("Ford Mondeo", 2010, 5000);
+
+console.log(civic.toString());
+console.log(mondeo.toString());
 ```
+*  생성자와 prototype 사용
+```js
+function Car(model, year, miles) {
+  this.model = model;
+  this.year = year;
+  this.miles = miles;
+}
+
+Car.prototype.toString = function() {
+  return this.model + " has done " + this.miles + " miles";
+}
+
+var civic = new Car("Honda Civic", 2009, 20000);
+var mondeo = new Car("Ford Mondeo", 2010, 5000);
+
+console.log(civic.toString());
+console.log(mondeo.toString());
+```
+
 **[⬆ 목차](#목차)**
 
 ---

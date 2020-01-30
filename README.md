@@ -2040,6 +2040,10 @@ meetingAlerts.notifyObservers('4pm');
 // Bob: There is a meeting at 4pm
 // Jane: There is a meeting at 4pm
 ```
+### 중재자(Mediator) 패턴
+*  객체 간의 결합도가 높을 수록 유지보수 비용이 올라간다.
+*  중재자 패턴은 이런 문제를 완화하기 위한 디자인 패턴이다.
+
 **[⬆ 목차](#목차)**
 
 ---

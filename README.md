@@ -2130,6 +2130,44 @@ function run() {
 
 run();
 ```
+### 프로토타입(prototype) 패턴
+*  프로토타입 패턴은 프로토타입 상속을 기반으로 한다.
+*  프로토타입 객체는 생성자가 생성하는 각 객체의 blueprint로 사용된다.
+*  ECMAScript5 표준에 정의된 실제 프로토타입 상속에는 Object.create를 사용해야 한다.
+```js
+function person(firstName,lastName){ 
+  this.firstName = firstName;
+  this.lastName = lastName;
+}
+
+person.prototype.fullName = function(){
+  return this.firstName + " " + this.lastName;
+}
+
+var person1 = new person('Akash','Pal');
+var person2 = new person('Black','Panther');
+
+person1 //{firstName: "Akash", lastName: "Pal"}
+person2 //{firstName: "Black", lastName: "Panther"}
+
+person1.fullName() //"Akash Pal"
+person2.fullName() //"Black Panther"
+```
+#### Object.create 사용
+```js
+var myCar = {
+  name: "Ford Escort",
+  drive: function() {
+    console.log("Weeee. I'm driving!");
+  }
+  panic: function() {
+    console.log("Wait. How do you stop this thing?");
+  }
+};
+
+var yourCar = Object.create(myCar);
+console.log(yourCar.name);
+```
 **[⬆ 목차](#목차)**
 
 ---

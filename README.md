@@ -2043,7 +2043,93 @@ meetingAlerts.notifyObservers('4pm');
 ### 중재자(Mediator) 패턴
 *  객체 간의 결합도가 높을 수록 유지보수 비용이 올라간다.
 *  중재자 패턴은 이런 문제를 완화하기 위한 디자인 패턴이다.
+*  중재자 패턴은 일련의 객체가 상호 작용하는 방식을 캡슐화 하는 객체 정의이다.
+#### 구조
+![mediator_pattern_structure](./img/mediator_pattern_structure.PNG)
+*  Mediator - 아래 샘플 코드에서 Chatroom
+	*  Colleague 객체와 통신하기 위한 인터페이스를 정의
+	*  Colleague 객체에 대한 참조를 유지
+	*  운영에 대한 중앙 제어 관리
+*  Colleagues - 아래 샘플 코드에서 Participants
+	*  Mediator가 중재하는 개체
+	*  각 인스턴스는 Mediator에 대한 참조를 유지
+#### 샘플 코드
+*  Chatroom에 등록하여 채팅 세션에 참여하는 네 명의 참가자가 있다.
+*  각 참가자는 Participant 객체로 표현된다.
+*  Participant는 서로에게 메시지를 보내면 Chatroom이 routing을 처리한다.
+*  로그 기능은 결과를 수집하고 표시하는 helper이다.
+```js
+class Participant {
+  constructor(name) {
+    this.name = name;
+    this.chatroom = null;
+  }
 
+  send(message, to) {
+    this.chatroom.send(message, this, to);
+  }
+
+  receive(message, from) {
+    log.add(from.name + " to " + this.name + ": " + message);
+  }
+}
+ 
+let Chatroom = function() {
+  let participants = {};
+
+  return { 
+    register: function(participant) {
+      participants[participant.name] = participant;
+      participant.chatroom = this;
+    },
+  
+    send: function(message, from, to) {
+      if (to) {                      // single message
+        to.receive(message, from);    
+      } else {                       // broadcast message
+        for (let key in participants) {   
+          if (participants[key] !== from) {
+            participants[key].receive(message, from);
+          }
+        }
+      }
+    }
+  };
+};
+
+// log helper
+log = (function() {
+    let log = '';
+
+    return {
+        add: msg => { log += msg + '\n'; },
+        show: () => { alert(log); log = ''; }
+    }
+})();
+ 
+function run() {
+  let yoko = new Participant('Yoko'),
+      john = new Participant('John'),
+      paul = new Participant('Paul'),
+      ringo = new Participant('Ringo'),
+      chatroom = new Chatroom(),
+
+  chatroom.register(yoko);
+  chatroom.register(john);
+  chatroom.register(paul);
+  chatroom.register(ringo);
+
+  yoko.send('All you need is love.');
+  yoko.send('I love you John.');
+  john.send('Hey, no need to broadcast', yoko);
+  paul.send('Ha, I heard that!');
+  ringo.send('Paul, what do you think?', paul);
+
+  log.show();
+}
+
+run();
+```
 **[⬆ 목차](#목차)**
 
 ---

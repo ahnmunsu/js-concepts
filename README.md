@@ -1899,7 +1899,7 @@ var testModule = (function() {
   return {
     incrementCounter: function() {
       return counter++;
-    }
+    },
     resetCounter: function() {
       console.log("counter value prior to reset: " + counter);
       counter = 0;

@@ -1807,7 +1807,7 @@ class Teacher extends Person {
 *  과거의 소프트웨어 개발 과정에서 발견된 설계의 노하우를 축적하여 이름을 붙여, 이후에 재이용하기 좋은 형태로 특정의 규약을 묶어서 정리한 것이다.
 *  알고리즘과 같이 프로그램 코드로 바로 변환될 수 있는 형태는 아니지만, 특정한 상황에서 구조적인 문제를 해결하는 방식을 설명해 준다.
 
-### 생성자 패턴
+### Constructor pattern
 *  객체 생성
 ```js
 var newObject = {};
@@ -1871,7 +1871,7 @@ console.log(mondeo.toString());
 console.log(civic.toString === mondeo.toString); // true
 ```
 
-### 모듈 패턴
+### Module pattern
 ```js
 var personModule = (function(){
   var firstName;
@@ -1911,7 +1911,7 @@ testModule.incrementCounter();
 testModule.resetCounter();
 ```
 
-### 노출(Revealing) 모듈 패턴
+### Revealing module pattern
 ```js
 var personModule = (function(){
   var firstName;
@@ -1936,7 +1936,7 @@ personModule.setName('akash','pal');
 personModule.getName(); //"akash pal"
 ```
 
-### 싱글톤(Singleton) 패턴
+### Singleton pattern
 ```js
 var singleton = (function() {
   var instance;
@@ -1980,7 +1980,7 @@ one.setName('Akash');
 two.getName(); //"Akash"
 ```
 
-### 옵저버(Observer) 패턴
+### Observer pattern
 *  옵저버 패턴은 이벤트 처리 및 위임에 사용된다.
 *  Subject는 Observer의 collection을 유지한다.
 *  Subject는 이벤트가 발생할 때마다 Observer에게 알린다.
@@ -2040,7 +2040,7 @@ meetingAlerts.notifyObservers('4pm');
 // Bob: There is a meeting at 4pm
 // Jane: There is a meeting at 4pm
 ```
-### 중재자(Mediator) 패턴
+### Mediator pattern
 *  객체 간의 결합도가 높을 수록 유지보수 비용이 올라간다.
 *  중재자 패턴은 이런 문제를 완화하기 위한 디자인 패턴이다.
 *  중재자 패턴은 일련의 객체가 상호 작용하는 방식을 캡슐화 하는 객체 정의이다.
@@ -2130,7 +2130,7 @@ function run() {
 
 run();
 ```
-### 프로토타입(prototype) 패턴
+### Prototype pattern
 *  프로토타입 패턴은 프로토타입 상속을 기반으로 한다.
 *  프로토타입 객체는 생성자가 생성하는 각 객체의 blueprint로 사용된다.
 *  ECMAScript5 표준에 정의된 실제 프로토타입 상속에는 Object.create를 사용해야 한다.
@@ -2159,7 +2159,7 @@ var myCar = {
   name: "Ford Escort",
   drive: function() {
     console.log("Weeee. I'm driving!");
-  }
+  },
   panic: function() {
     console.log("Wait. How do you stop this thing?");
   }
@@ -2168,6 +2168,99 @@ var myCar = {
 var yourCar = Object.create(myCar);
 console.log(yourCar.name);
 ```
+### Commanmd pattern
+*  명령 패턴이란 요청을 객체의 형태로 캡슐화하여 사용자가 보낸 요청을 나중에 이용할 수 있도록 메서드 이름, 매개 변수 등 요청에 필요한 정보를 저장 또는 로깅, 취소 할 수 있게 하는 패턴이다.
+*  명령(command), 수신자(receiver), 발동자(invoker), 클라이언트(client)의 네 개의 용어가 항상 따른다.
+*  요청과 수행을 분리시켜 느슨한 결합을 유지한다.
+*  일련의 행동을 특정 Receiver하고 연결을 통해 캡슐화하고 execute라는 메소드 하나만 외부에 공개한다.
+*  장점은 요청 부분과 요청 실행 부분을 분리, 실행 취소, 보관, 로그 생성이 가능하다는 점이다.
+```js
+function add(x, y) { return x + y; }
+function sub(x, y) { return x - y; }
+function mul(x, y) { return x * y; }
+function div(x, y) { return x / y; }
+ 
+var Command = function (execute, undo, value) {
+    this.execute = execute;
+    this.undo = undo;
+    this.value = value;
+}
+ 
+var AddCommand = function (value) {
+    return new Command(add, sub, value);
+};
+ 
+var SubCommand = function (value) {
+    return new Command(sub, add, value);
+};
+ 
+var MulCommand = function (value) {
+    return new Command(mul, div, value);
+};
+ 
+var DivCommand = function (value) {
+    return new Command(div, mul, value);
+};
+ 
+var Calculator = function () {
+    var current = 0;
+    var commands = [];
+ 
+    function action(command) {
+        var name = command.execute.toString().substr(9, 3);
+        return name.charAt(0).toUpperCase() + name.slice(1);
+    }
+ 
+    return {
+        execute: function (command) {
+            current = command.execute(current, command.value);
+            commands.push(command);
+            log.add(action(command) + ": " + command.value);
+        },
+ 
+        undo: function () {
+            var command = commands.pop();
+            current = command.undo(current, command.value);
+            log.add("Undo " + action(command) + ": " + command.value);
+        },
+ 
+        getCurrentValue: function () {
+            return current;
+        }
+    }
+}
+ 
+// log helper
+ 
+var log = (function () {
+    var log = "";
+ 
+    return {
+        add: function (msg) { log += msg + "\n"; },
+        show: function () { alert(log); log = ""; }
+    }
+})();
+ 
+function run() {
+    var calculator = new Calculator();
+ 
+    // issue commands
+ 
+    calculator.execute(new AddCommand(100));
+    calculator.execute(new SubCommand(24));
+    calculator.execute(new MulCommand(6));
+    calculator.execute(new DivCommand(2));
+ 
+    // reverse last two commands
+ 
+    calculator.undo();
+    calculator.undo();
+ 
+    log.add("\nValue: " + calculator.getCurrentValue());
+    log.show();
+}
+```
+
 **[⬆ 목차](#목차)**
 
 ---

@@ -2388,13 +2388,133 @@ function run() {
 ---
 
 ## Partial Applications, Currying, Compose and Pipe
-...
+### Partial Applications
+*  여러 개의 인자를 받는 함수로 일부 인자를 고정한 함수를 만드는 기법이다.
+*  중복된 코드를 줄이고 적절한 함수명을 통해 가독성을 높일 수 있다.
+*  함수의 실행을 마지막 인자가 주어질 때까지 뒤로 미룰 수 있다.
+```js
+var plus = function(a, b, c) {
+  return a + b + c;
+};
+
+var plusa = plus.bind(null, 1);
+plusa(2, 3); // 6
+var plusb = plusa.bind(null, 2);
+plusb(4); // 7
+var plusab = plus.bind(null, 1, 3);
+plusab(5); // 9
+```
+```
+function ajax(endPoint = '', search = {}) {
+  // ...
+  return Promise.resolve(res);
+}
+
+const getUser = ajax.bind(null, '/user');
+getUser({ id: 'A1' }).then((res) => {
+    // ...
+  })
+
+const getAdminUser = ajax.bind(null, 'user', { authority: 'admin' });
+getAdminUser().then((res) => {
+    // ...
+  })
+```
+### Currying
+*  여러 개의 인자를 받는 함수를 인자 하나만 받는 함수 여러 개로 순차적으로 처리하는 기법이다.
+*  예) `doSomething(1, "Hello", true)` 대신 `doSomething(1)("Hello")(true)`와 같이 호출한다.
+*  중복된 코드를 줄이고 적절한 함수명을 통해 가독성을 높일 수 있다.
+*  함수의 실행을 마지막 인자가 주어질 때까지 뒤로 미룰 수 있다.
+
+```js
+// Arrow function
+const add = x => y => x + y;
+// Normal function
+function add(x) {
+  return function(y) {
+    return x + y;
+  }
+}
+
+const addFive = add(5);
+addFive(7); // 12
+```
+*  현실적인 예제
+```js
+var server = function(address) {
+  return function(loginInfo) {
+    // 실제 서버 접속후
+    var loginToken = //
+    return function(request) {
+      // loginToken을 사용해서 서버에 특정 request요청하는 코드
+    };
+  };
+};
+
+var connection = server("http://address");
+var request = connection({"username": "kevin", "password": "1111"});
+var request2 = connection({"username": "tom", "password": "1234"});
+```
+### Compose, Pipe
+*  함수형 프로그래밍의 기본 아이디어는 함수들을 엮는 것이다.
+*  한 가지 기능을 수행하는 작은 함수들을 조립하여 복잡한 기능을 생성한다.
+*  이것이 바로 함수의 합성(function composition)이다.
+*  이것은 한 함수의 출력을 다른 함수의 입력으로 전달함으로써 달성된다.
+#### 함수의 합성
+```js
+const addTwo = x => x + 2;
+const multiplyByFour = x => 4 * x;
+const devideByTwo = x => x / 2;
+
+const composed = X => deviceByTwo(addTwo(multiplyByFour(X)));
+```
+위와 같이 함수를 합성하는 것은 읽기 어렵기 때문에 적합하지 않다.
+#### compose()
+*  compose()는 함수들을 인자로 받는다.
+*  data flow는 오른쪽에서 왼쪽이다.
+*  구현은 아래와 같다.
+```js
+const compose = (...fns) => {
+  return x => {
+    return fns.reduceRight((y, f) => f(y), x)
+  }
+}
+```
+*  사용법은 아래와 같다.
+```js
+const addTwo = x => x + 2;
+const multiplyByFour = x => 4 * x;
+const devideByTwo = x => x / 2;
+
+const composeFunc = compose(devideByTwo, multiplyByFour, addTwo)
+const result = composeFunc(3)
+// 10 <-- devideByTwo(20) <-- 20 <-- multiplyByFour(5) <-- 5 <-- addTwo(3) <-- 3
+```
+#### pipe()
+*  pipe()는 compose()와  data flow가 왼쪽에서 오른쪽이라는 점 외에 동일하다.
+*  구현은 아래와 같다.
+```js
+const pipe = (...fns) => {
+  return x => {
+    return fns.reduce((y, f) => f(y), x)
+  }
+}
+```
+*  사용법은 아래와 같다.
+```js
+const addTwo = x => x + 2;
+const multiplyByFour = x => 4 * x;
+const devideByTwo = x => x / 2;
+
+const pipeFunc = pipe(addTwo, multiplyByFour, devideByTwo)
+const result = pipeFunc(3)
+```
 **[⬆ 목차](#목차)**
 
 ---
 
 ## Clean Code
-...
+https://github.com/qkraudghgh/clean-code-javascript-ko
 **[⬆ 목차](#목차)**
 
 ---

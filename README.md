@@ -2514,7 +2514,8 @@ const result = pipeFunc(3)
 ---
 
 ## Clean Code
-https://github.com/qkraudghgh/clean-code-javascript-ko
+https://github.com/qkraudghgh/clean-code-javascript-ko  
+
 **[⬆ 목차](#목차)**
 
 ---

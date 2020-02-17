@@ -41,7 +41,47 @@ https://github.com/leonardomso/33-js-concepts을 참고하여 자바 스크립�
 ---
 
 ## Call Stack
-...
+*  call stack(호출 스택)은 프로그램에서 우리가 어디에 있는 지를 기본적으로 기록하는 데이터 구조이다.
+*  자바스크립트는 single-thread 프로그래밍 언어이므로, 하나의 호출 스택이 있다.
+*  함수를 실행하면 해당 함수의 기록을 스택 맨 위에 추가(push)한다.
+*  함수가 리턴되면 스택에 쌓여있던 함수는 제거(pop)된다.
+### 함수 실행, 리턴 중 호출 스택 상태
+```js
+function multiply(x, y) {
+    return x * y;
+}
+function printSquare(x) {
+    var s = multiply(x, x);
+    console.log(s);
+}
+printSquare(5);
+```
+![callstack](./img/callstack_ex1.PNG)
+### 예외 처리 시 스택의 동작
+```js
+function foo() {
+    throw new Error('SessionStack will help you resolve crashes :)');
+}
+function bar() {
+    foo();
+}
+function start() {
+    bar();
+}
+start();
+```
+![callstack2](./img/callstack_ex2.PNG)
+### 스택 오버플로우
+스택의 사이즈를 초과 했을 때 발생하는 오류이다.
+```js
+function foo() {
+    foo();
+}
+foo();
+```
+### 단일 호출 스택의 문제점
+하나의 함수 실행이 지연될 경우 다른 함수 실행이 늦어지는 문제가 있다.
+
 **[⬆ 목차](#목차)**
 
 ---

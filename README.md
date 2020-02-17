@@ -508,7 +508,38 @@ console.log(feed != null); // true
 ---
 
 ## == vs === vs typeof
-...
+### ==
+`==` 연산자는 동등 연사자로 피연산자가 서로 다른 타입이면 타입을 강제로 변환하여 비교한다.
+```js
+0 == ''     //true
+0 == '0'     //true
+1 == true     //true
+false == '0'    //true
+null == undefined    //true
+false == null    //false
+false == undefined    //false
+```
+### === 
+`===` 연산자는 일치 연산자로 두 피연산자를 더 정확하게 비교한다.
+```js
+0 === ''     //false
+0 === false    //false
+1 === true     //false
+NaN === NaN     //false
+null === undefined     //false
+```
+### typeof
+*  typeof는 변수의 데이터 타입을 반환하는 연산자이다.
+*  사용법 : typeof variable
+*  반환되는 값
+	*  undefined : 변수가 정의되지 않거나 값이 없을 때
+	*  number : 데이터 타입이 수일 때
+	*  string : 데이터 타입이 문자열일 때
+	*  boolean : 데이터 타입이 불리언일 때
+	*  object : 데이터 타입이 함수, 배열 등 객체일 때
+	*  function : 변수의 값이 함수일 때
+	*  symbol : 데이터 타입이 심볼일 때
+  
 **[⬆ 목차](#목차)**
 
 ---

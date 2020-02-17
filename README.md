@@ -667,7 +667,8 @@ function greet() {
   console.log("Hello");
 }
 ```
-*  greet() 실행문을 함수 선언 위에 추가할 경우 Function Expression은 undefined가 도출되고, Function Statement는 Hello가 출력된다.
+*  greet() 실행문을 함수 선언 위에 추가할 경우 Function Expression은 undefined가 도출되고, Function Statement는 Hello가 출력된다.  
+
 **[⬆ 목차](#목차)**
 
 ---

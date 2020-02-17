@@ -639,7 +639,35 @@ function grandfather() {
 ---
 
 ## Expression vs Statement
-...
+### Expression
+*  Expression이란 값을 산출해내는 코드를 말한다.
+*  값이 도출되기 때문에 함수의 인자로 들어갈 수 있다.
+```js
+3;
+'hello';
+myVar;
+5+5;
+myFunc('a', 'b');
+```
+### Statement
+*  Statement란 특정 액션을 수행하는 코드를 말한다.
+*  Statement는 값을 도출할 수 있으며 이를 Expression Statement라고 칭하게 된다.
+*  Statement 중에서 if Statement나 for Statement처럼 그 자체로는 값을 도출하지 않을 수 있고 이것들은 함수의 인자로도 들어갈 수 없다.
+*  모든 Expression은 Statement이지만, 모든 Statement가 Expression은 아니다.
+### Function Expression vs Function Statement
+*  Function은 아래처럼 Expression 및 Statement 형식으로 선언될 수 있다.
+```js
+// Function Expression
+var greet = function() {
+  console.log("Hello");
+};
+
+// Function Statement
+function greet() {
+  console.log("Hello");
+}
+```
+*  greet() 실행문을 함수 선언 위에 추가할 경우 Function Expression은 undefined가 도출되고, Function Statement는 Hello가 출력된다.
 **[⬆ 목차](#목차)**
 
 ---

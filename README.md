@@ -244,7 +244,46 @@ console.log(myObject.mySymbol); // x
 ---
 
 ## Value Types and Reference Types
-...
+### Value Types
+*  자바스크립트는 값에 의한 전달(passed by value)이 일어나는 6가지의 데이터 타입(Boolean, Null, Undefined, String, Number, Symbol)을 가지고 있다. 
+*  이러한 데이터 타입을 원시 타입(Primitive Types)이라고 부른다.
+*  어떠한 원시 타입이 변수에 할당 된다면, 그 변수를 원시 타입을 가진 변수라고 생각할 수 있다.
+```js
+var x = 10;
+var y = 'abc';
+var z = null;
+```
+*  위에서 x는 10이란 값을 가지고 있고, y는 abc란 값을 가지고 있다.
+*  이 변수들을 다른 변수에 `=` 키워드를 이용하여 할당할 때, 새로운 변수에 값을 복사(copy)하게 된다.
+```js
+var x = 10;
+var y = 'abc';
+
+var a = x;
+var b = y;
+
+console.log(x, y, a, b); // -> 10, 'abc', 10, 'abc'
+```
+*  위에서 a와 x는 둘 다 10이란 값을 갖게 된다. 
+*  b와 y는 둘 다 abc라는 값을 갖고 있다.
+*  이들은 값들이 복사 된 것이기 때문에 각각의 변수들은 서로 관계가 없다.
+
+### Reference Types
+*  자바스크립트는 참조에 의한 전달(passed by reference)이 일어나는 3가지 데이터 타입(Array, Function, Object)도 가지고 있다.
+*  위 3가지 데이터 타입은 크게 보면 전부 객체(Object)로 볼 수 있다.
+*  원시 타입이 아닌 값이 할당된 변수들은 그 값으로 향하는 참고(reference)를 갖게 된다.
+*  참조(reference)는 메모리에서 객체의 위치를 가리키고 있다. 즉, 변수는 실제로 값을 가지고 있지 않다.
+*  `arr = []`를 작성하면 메모리에 배열이 생성된다. 변수 `arr`이 갑는 것은 그 배열이 위치한 주소이다.
+*  객체와 같은 참조 타입의 값이 `=` 키워드로 다른 변수로 복사될 때 그 주소값(참조)이 복사된다. 
+```js
+var reference = [1];
+var refCopy = reference;
+```
+*  두 변수가 같은 배열을 참조한다는 것을 아래와 같이 확인할 수 있다.
+```js
+reference.push(2);
+console.log(reference, refCopy); // -> [1, 2], [1, 2]
+```
 **[⬆ 목차](#목차)**
 
 ---

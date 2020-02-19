@@ -772,7 +772,7 @@ NAMESPACE.obj = {}; // 객체 생성
   처리해야 하는 Event들을 임시 저장하는 대기 queue
 *  Event Loop
   Call Stack이 비워졌을 때 Message Queue에 대기하고 있는 Event를 Call Stack에 push 된다.
-### Job Queue, Microtask
+### Microtask, Microtask queue(Job queue)
 ![js_microtask](./img/js_microtask.png)
 *  Microtask는 Macrotask보다 우선 순위가 높다.
 *  Macrotask는 항상 JS 코드 실행이 완료되고 Microtask Queue가 비어있는 후에 실행된다.
@@ -780,6 +780,8 @@ NAMESPACE.obj = {}; // 객체 생성
 *  Microtask 큐를 비운 후 UI를 다시 렌더링 할 수 있다.
 *  Promise는 Microtask에 속하고 setTimeout은 Macrotask에 속한다.
 *  실행 순서는 다음과 같다. General code->Promises->Events and setTimeout etc.
+*  아래 코드의 출력 순서 : script start -> script end -> promise1 -> promise2 -> setTimeout
+<img src="./img/js_microtask2.png" width="400">
 
 **[⬆ 목차](#목차)**
 

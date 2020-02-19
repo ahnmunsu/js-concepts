@@ -762,15 +762,15 @@ NAMESPACE.obj = {}; // 객체 생성
 ## Message Queue and Event Loop
 ### 브라우저에서 자바스크립트 런타임 환경
 ![js_event_loop](./img/js_event_loop.png)  
-*  Heap
+*  Heap  
   생성된 자바스크립트 객체가 존재하는 메모리
-*  Stack(Call Stack)
+*  Stack(Call Stack)  
   현재 프로그램이 실행하고 있는 작업을 기록하는 자료 구조
-*  Web APIs
+*  Web APIs  
   Document, AJAX, Event, Timing 등 코어 자바스크립트에 없는 기능을 지원한다. 브라우저에서 지원하는 기능들이다. 대표적으로 setTimeout이 있다. 기능 수행 후 callback을 Message Queue에 추가한다.
-*  Message Queue(Callback Queue, Event Queue)
+*  Message Queue(Callback Queue, Event Queue)  
   처리해야 하는 Event들을 임시 저장하는 대기 queue
-*  Event Loop
+*  Event Loop  
   Call Stack이 비워졌을 때 Message Queue에 대기하고 있는 Event를 Call Stack에 push 된다.
 ### Microtask, Microtask queue(Job queue)
 ![js_microtask](./img/js_microtask.png)

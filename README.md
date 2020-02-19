@@ -879,7 +879,7 @@ requestAnimationFrame(function(timestamp){
 4. 최적화 컴파일러는 프로파일링 데이터를 기반으로 최적화된 기계어를 생성
 5. 정확하지 않은 결과가 나오면 다시 deoptimize하여 바이트 코드로 되돌림
 
-![js_engine_pipleline-v8](./img/js_engine_pipleline-v8.png)
+![js_engine_optimizing](./img/js_engine_optimizing.png)
 *  인터프리터(interpreter)  
   최적화 되지 않은 바이트 코드를 빠르게 생성한다.
 *  최적화 컴파일러(optimizing compiler)  
@@ -888,8 +888,14 @@ requestAnimationFrame(function(timestamp){
 *  바이트 코드(Byte code)  
   특정 하드웨어가 아닌 가상 컴퓨터에서 돌아가는 실행 프로그램을 위한 이진 표현법. 하드웨어가 아닌 소프트웨어에 의해 처리되기 때문에 보통 기계어보다 더 추상적이다.
 *  JIT 컴파일(Just-In-Time Compilation) 또는 동적 번역(Dynamic Translation)은 프로그램을 실제 실행하는 시점에 기계어로 번역하는 컴파일 기법이다. 이 기법은 프로그램의 실행 속도를 빠르게 하기 위해 사용된다.
+*  인터프리터는 바이트 코드를 빠르게 생성할 수 있지만 효율적인 코드가 아니다. 반대로 최적화 컴파일러는 시간이 조금 더 걸리지만 효율적인 기계 코드를 생성한다.
 
-![js_engine_optimizing](./img/js_engine_optimizing.png)
+![js_engine_pipleline-v8](./img/js_engine_pipleline-v8.png)
+*  V8의 세부 파트는 이름 그대로 자동차의 8기통 엔진이 떠어로는 네이밍을 하고 있다.
+*  인터프리터는 `Ignition`이라고 부르며 코드를 점화하여 바이트 코드를 생성 및 실행한다.
+*  바이트 코드가 실행될 때 인터프리터는 프로파일링 데이터를 수집하여 나중에 최적화 할 때 사용한다.
+*  특정 함수를 자주 수행하게 되면 바이트 코드와 프로파일링 데이터를 `TurboFan`이라고 부르는 최적화 컴파일러로 보내서 최적화된 기계어를 만들어낸다.
+
 
 **[⬆ 목차](#목차)**
 

@@ -771,7 +771,7 @@ NAMESPACE.obj = {}; // 객체 생성
 *  Message Queue(Callback Queue, Event Queue)  
   처리해야 하는 Event들을 임시 저장하는 대기 queue
 *  Event Loop  
-  Call Stack이 비워졌을 때 Message Queue에 대기하고 있는 Event를 Call Stack에 push 된다.
+  Call Stack이 비워졌을 때 Message Queue에 대기하고 있는 Event가 Call Stack에 push 된다.
 ### Microtask, Microtask queue(Job queue)
 ![js_microtask](./img/js_microtask.png)
 *  Microtask는 Macrotask보다 우선 순위가 높다.

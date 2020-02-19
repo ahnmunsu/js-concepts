@@ -780,9 +780,27 @@ NAMESPACE.obj = {}; // 객체 생성
 *  Microtask 큐를 비운 후 UI를 다시 렌더링 할 수 있다.
 *  Promise는 Microtask에 속하고 setTimeout은 Macrotask에 속한다.
 *  실행 순서는 다음과 같다. General code->Promises->Events and setTimeout etc.
-*  아래 코드의 출력 순서 : script start -> script end -> promise1 -> promise2 -> setTimeout
-<img src="./img/js_microtask2.png" width="400">
+*  아래 코드의 출력 순서 : script start -> script end -> promise1 -> promise2 -> requestAnimationFrame -> setTimeout
+```js
+console.log("script start");
 
+setTimeout(function() {
+  console.log("setTimeout");
+}, 0);
+
+requestAnimationFrame(function() {
+    console.log("requestAnimationFrame");
+});
+
+Promise.resolve().then(function() {
+  console.log("promise1");
+}).then(function() {
+  console.log("promise2");
+});
+
+console.log("script end");
+```
+![js_microtask2](./img/js_microtask2.png)
 **[⬆ 목차](#목차)**
 
 ---

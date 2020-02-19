@@ -801,6 +801,7 @@ Promise.resolve().then(function() {
 console.log("script end");
 ```
 ![js_microtask2](./img/js_microtask2.png)
+
 **[⬆ 목차](#목차)**
 
 ---

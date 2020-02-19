@@ -760,7 +760,7 @@ NAMESPACE.obj = {}; // 객체 생성
 ---
 
 ## Message Queue and Event Loop
-...
+![js_event_loop](./img/js_event_loop.png)
 **[⬆ 목차](#목차)**
 
 ---

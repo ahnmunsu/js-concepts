@@ -870,7 +870,27 @@ requestAnimationFrame(function(timestamp){
 ---
 
 ## JavaScript Engines
-...
+### JavaScript Engine Pipeline
+자바스크립트 엔진이 소스 코드를 기계어로 만들기까지 공통적으로 수행하는 과정  
+![js_engine_pipeline](./img/js_engine_pipeline.png)
+1. 소스 코드를 파싱하여 [Abstract Syntax Tree](https://ko.wikipedia.org/wiki/%EC%B6%94%EC%83%81_%EA%B5%AC%EB%AC%B8_%ED%8A%B8%EB%A6%AC)(AST)를 생성
+2. 인터프리터는 AST를 바탕으로 바이트코드 생성 (실제로는 여기까지가 엔진이 실행하는 부분)
+3. 코드를 더 빠르게 실행하기 위해 바이트 코드와 프로파일링 데이터를 최적화 컴파일러에게 보냄
+4. 최적화 컴파일러는 프로파일링 데이터를 기반으로 최적화된 기계어를 생성
+5. 정확하지 않은 결과가 나오면 다시 deoptimize하여 바이트 코드로 되돌림
+
+![js_engine_pipleline-v8](./img/js_engine_pipleline-v8.png)
+*  인터프리터(interpreter)  
+  최적화 되지 않은 바이트 코드를 빠르게 생성한다.
+*  최적화 컴파일러(optimizing compiler)  
+  최적화된 기계어 코드를 생성한다.
+*  이 과정에서 바이트 코드는 중간 언어(IR: Intermediate Representation)이다. `interpreter` 모드라면 바이트 코드를 하나씩 읽어서 실행하고, `JIT` 모드라면 바이트 코드를 기반으로 컴파일하여 수행한다.
+*  바이트 코드(Byte code)  
+  특정 하드웨어가 아닌 가상 컴퓨터에서 돌아가는 실행 프로그램을 위한 이진 표현법. 하드웨어가 아닌 소프트웨어에 의해 처리되기 때문에 보통 기계어보다 더 추상적이다.
+*  JIT 컴파일(Just-In-Time Compilation) 또는 동적 번역(Dynamic Translation)은 프로그램을 실제 실행하는 시점에 기계어로 번역하는 컴파일 기법이다. 이 기법은 프로그램의 실행 속도를 빠르게 하기 위해 사용된다.
+
+![js_engine_optimizing](./img/js_engine_optimizing.png)
+
 **[⬆ 목차](#목차)**
 
 ---

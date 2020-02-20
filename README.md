@@ -1104,7 +1104,113 @@ todoModel.reload();
 ---
 
 ## this, call, apply and bind
-...
+### this
+*  현재 함수를 부른 객체가 누구인지를 나타낸다.
+*  this를 지정하지 않으면 기본적으로 브라우저의 전역객체를 가리킨다.
+*  use strict 모드에서는 this를 정의하지 않았을 경우 undefined 가 유지된다.
+*  객체의 메소드로 호출 되었을때는 해당 메소드의 객체를 가리킨다.
+*  ES6 화살표 함수를 사용한다면 기존의 바인딩을 무시하고 렉시컬 스코프로 this를 바인딩 된다.
+
+### call
+*  call 메서드는 모든 함수에서 사용할 수 있으며, this를 특정 값으로 지정할 수 있다.
+```js
+    const bruce = {
+        name : 'Bruce'
+    };
+
+    const madeline = {
+        name : 'Madeline'
+    };
+
+    //이 함수는 어떤 객체에도 연결되지 않았지만 this를 사용함.
+    function greet(){
+        return `Hello, I'm ${this.name}`;
+    };
+
+    greet();               // 'Hello, I'm undefined' - this는 어디에도 묶이지 않음
+    greet.call(bruce)     // 'Hello, I'm Bruce'     - this는 bruce
+    greet.call(madeline)   // 'Hello, I'm Madeline'  - this는 madeline
+```
+*  함수를 호출하면서 call을 사용하고 this로 사용할 객체를 넘기면 해당 함수가 주어진 객체의 메서드인 것처럼 사용할 수 있다.
+*  call의 첫 번째 매개변수는 this로 사용할 값이고, 매개변수가 더 있으면 그 매개변수는 호출하는 함수로 전달된다.
+```js
+    function update(birthYear, occupation){
+        this.birthYear = birthYear;
+        this.occupation = occupation;
+    };
+
+    update.call(bruce, 1949, 'singer'); // bruce 변경
+    /*
+        bruce는 이제
+        {
+            name : 'Bruce',
+            birthYear : 1949,
+            occupation : 'singer'
+        }
+        로 변경됨
+     */
+
+    update.call(madeline, 1942, 'actress'); // madeline 변경
+    /*
+        madeline은 이제
+        {
+            name : 'Madeline',
+            birthYear : 1942,
+            occupation : 'actress'
+        }
+        로 변경됨
+     */
+```
+### apply
+*  apply는 함수 매개변수를 처리하는 방법을 제외하면 call과 완전히 같다. 
+*  call은 일반적인 함수와 마찬가지로 매개변수를 직접 받지만, apply는 매개변수를 배열로 받는다.
+```js
+    update.apply(bruce, [1955, 'actor']);
+    /*
+        bruce는 이제
+        {
+            name : 'Bruce',
+            birthYear : 1955,
+            occupation : 'actor'
+        }
+        로 변경됨
+     */
+
+    update.apply(madeline, [1918, 'writer']);
+    /*
+        madeline은 이제
+        {
+            name : 'Madeline',
+            birthYear : 1918,
+            occupation : 'writer'
+        }
+        로 변경됨
+     */
+```
+*  apply는 배열 요소를 함수 매개변수로 사용해야 할 때 유용하다. 
+*  자바스크립트의 내장 함수인 Math.min과 Math.max는 매개변수를 받아 그중 최소값과 최대값을 각각 반환한다.
+*  apply를 사용하면 기존 배열을 이들 함수에 바로 넘길 수 있다.
+```js
+    const arr = [2,3,-5,15,7];
+
+    Math.min.apply(null, arr); // -5
+    Math.max.apply(null, arr); // 15
+```
+### bind
+*  this의 값을 바꿀 수 있는 마지막 함수는 bind이다. 
+*  bind를 사용하면 함수의 this 값을 영구히 바꿀 수 있다. 
+*  update 메서드를 이리저리 옮기면서 호출할 때 this 값은 항상 bruce가 되게끔, call이나 apply, 다른 bind와 함께 호출하더라도 this 값이 bruce가 되도록 하려면 bind를 사용한다.
+```js
+    const updateBruce = update.bind(bruce);
+
+    updateBruce(1904, "actor");
+    // bruce 는 이제 { name: "Bruce", birthYear: 1904, occupation: "actor" }
+
+    updateBruce.call(madeline, 1274, "king");
+    // bruce 는 이제 { name: "Bruce", birthYear: 1274, occupation: "king" };
+    // madeline은 변하지 않음
+```
+
 **[⬆ 목차](#목차)**
 
 ---

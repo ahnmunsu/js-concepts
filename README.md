@@ -71,8 +71,8 @@ function start() {
 start();
 ```
 ![callstack2](./img/callstack_ex2.PNG)
-### 스택 오버플로우
-스택의 사이즈를 초과 했을 때 발생하는 오류이다.
+### Stack Overflow
+스택의 사이즈를 초과 했을 때 발생하는 오류이다. 아래와 같이 재귀 호출 시 발생 시킬 수 있다.
 ```js
 function foo() {
     foo();

@@ -1711,7 +1711,24 @@ function addElement(array, element) {
 ---
 
 ## Closures
-...
+*  클로저는 독립적인 자유 변수를 가리키는 함수이다.
+*  클로저 안에서 정의된 함수는 만들어진 환경을 기억한다.
+### 예제
+```js
+function getClosure() { 
+  var text = 'variable 1';
+  return function() { return text; };
+} 
+
+var closure = getClosure(); 
+console.log(closure()); // 'variable 1'
+```
+*  getClosure()는 함수를 반환하고, 반환된 함수는 getClosure() 내부에 선언된 변수를 참조하고 있다.
+*  이렇게 참조된 변수는 함수 실행이 끝나도 사라지지 않고 값을 반환한다.
+*  getClosure()가 반환한 closure 함수가 클로저이다.
+*  클로저를 사용할 경우 외부에서 클로저 함수 내부의 변수에 접근할 방법이 없기 때문에 `Capsulation(은닉화)` 된다.
+*  클로저가 내부 변수를 참조하는 동안에는 내부 변수가 Garbage Collection 대상이 아니기 때문에 메모리가 회수되지 않는다. 따라서 클로저 사용이 끝나면 참조를 제거하는 것이 좋다.
+
 **[⬆ 목차](#목차)**
 
 ---

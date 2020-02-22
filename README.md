@@ -1468,7 +1468,195 @@ console.log(new_obj);  // Object { a: 10, b: 20, c: 30 }
 ---
 
 ## map, reduce, filter
-...
+### map
+map() 메서드는 배열 내의 모든 요소 각각에 대하여 제공된 함수(callback)를 호출하고 그 결과를 모아서 새로운 배열을 반환한다.
+```js
+var num = [2, 4, 6, 8];
+var result = num.map(function(num) { return num * 10; });
+console.log(result); // [20, 40, 60, 80]
+```
+
+### reduce
+reduce() 메서드는 왼쪽에서 오른쪽으로 이동하며 배열의 각 요소마다 누적 계산값과 함께 함수를 적용해 하나의 값으로 줄인다.
+```js
+var sumArr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+var result = sumArr.reduce(function(prev, curr) { return prev + curr; });
+console.log(result); // 55
+```
+
+### filter
+filter() 메서드는 제공된 함수로 구현된 테스트를 통화하는 모든 요소가 있는 새로운 배열을 만든다.
+```js
+var persons = [
+  { name: "aaa", learn: "javascript" },
+  { name: "bbb", learn: "javascript" },
+  { name: "ccc", learn: "java" },
+  { name: "ddd", learn: "javascript" }
+];
+
+var isJava = function(person) {
+  return person.learn === 'java';
+};
+
+var result = persons.filter(isJava);
+
+console.log(result); // { name: 'ccc', learn: 'java' }
+```
+
+### some
+some() 메서드는 배열 내 일부 요소가 제공된 함수에 의해 구현된 테스트를 통과하는 지를 테스트한다.
+```js
+var aTeam = [
+  { id: 1, name: "Steven", xMan: false },
+  { id: 2, name: "Steve", xMan: false },
+  { id: 3, name: "James", xMan: false }
+];
+
+var bTeam = [
+  { id: 1, name: "Dennis", xMan: false },
+  { id: 2, name: "Linus", xMan: false },
+  { id: 3, name: "Rocket Man", xMan: true }
+];
+
+var isXman = function(arr) { return arr.xMan; };
+
+console.log(aTeam.some(isXman)); // false
+console.log(bTeam.some(isXman)); // true
+```
+
+### 유용한 예제
+1. 배열에서 중복 제거하기
+```js
+let values = [3, 1, 3, 5, 2, 4, 4, 4];
+let uniqueValues = [...new Set(values)];
+// uniqueValues is [3, 1, 5, 2, 4]
+```
+2. 간단한 검색(case-sensitive)
+```js
+let users = [
+  { id: 11, name: 'Adam', age: 23, group: 'editor' },
+  { id: 47, name: 'John', age: 28, group: 'admin' },
+  { id: 85, name: 'William', age: 34, group: 'editor' },
+  { id: 97, name: 'Oliver', age: 28, group: 'admin' }
+];
+let res = users.filter(it => it.name.includes('oli'));
+// res is []
+```
+3. 간단한 검색(case-insensitive)
+```js
+let res = users.filter(it => new RegExp('oli', "i").test(it.name));
+// res is
+[
+  { id: 97, name: 'Oliver', age: 28, group: 'admin' }
+]
+```
+4. 특정 유저가 admin 권한을 갖고 있는지 확인
+```js
+let hasAdmin = users.some(user => user.group === 'admin');
+// hasAdmin is true
+```
+5. array of arrays 펼치기
+```js
+let nested = [[1, 2, 3], [4, 5, 6], [7, 8, 9]];
+let flat = nested.reduce((acc, it) => [...acc, ...it], []);
+// flat is [1, 2, 3, 4, 5, 6, 7, 8, 9]
+```
+6. 특정 키의 빈도를 포함하는 객체를 만들기
+```js
+let users = [
+  { id: 11, name: 'Adam', age: 23, group: 'editor' },
+  { id: 47, name: 'John', age: 28, group: 'admin' },
+  { id: 85, name: 'William', age: 34, group: 'editor' },
+  { id: 97, name: 'Oliver', age: 28, group: 'admin' }
+];
+let groupByAge = users.reduce((acc, it) =>
+  ({ ...acc, [it.age]: (acc[it.age] || 0) + 1 }),
+{});
+// groupByAge is {23: 1, 28: 2, 34: 1}
+```
+7. array of objects 인덱싱 (lookup table)
+```js
+let uTable = users.reduce((acc, it) => ({...acc, [it.id]: it }), {})
+// uTable equals:
+{
+  11: { id: 11, name: 'Adam', age: 23, group: 'editor' },
+  47: { id: 47, name: 'John', age: 28, group: 'admin' },
+  85: { id: 85, name: 'William', age: 34, group: 'editor' },
+  97: { id: 97, name: 'Oliver', age: 28, group: 'admin' }
+}
+```
+8. 배열 안의 각각의 item에서 특정 키로 유일한 값들 뽑아내기
+```js
+let listOfUserGroups = [...new Set(users.map(it => it.group))];
+// listOfUserGroups is ['editor', 'admin'];
+```
+9. 객체 key-value map 역전
+```js
+let cities = {
+  Lyon: 'France',
+  Berlin: 'Germany',
+  Paris: 'France'
+};
+
+let countries = Object.keys(cities).reduce((acc, k) => {
+  let country = cities[k];
+  acc[country] = [...(acc[country] || []), k];
+  return acc;
+}, {});
+
+// countries is
+{
+  France: ["Lyon", "Paris"],
+  Germany: ["Berlin"]
+}
+```
+10. 섭씨 온도를 화씨 온도로 바꾸기
+```js
+let celsius = [-15, -5, 0, 10, 16, 20, 24, 32]
+let fahrenheit = celsius.map(t => t * 1.8 + 32);
+// fahrenheit is [5, 23, 32, 50, 60.8, 68, 75.2, 89.6]
+```
+11. 객체를 쿼리 스트링으로 인코딩하기
+```js
+let params = {lat: 45, lng: 6, alt: 1000};
+let queryString = Object.entries(params).map(p => encodeURIComponent(p[0]) + '=' + encodeURIComponent(p[1])).join('&')
+// queryString is "lat=45&lng=6&alt=1000"
+```
+12. 명시된 키와 함께 읽기 가능한 string 으로 유저 테이블 출력
+```js
+let users = [
+  { id: 11, name: 'Adam', age: 23, group: 'editor' },
+  { id: 47, name: 'John', age: 28, group: 'admin' },
+  { id: 85, name: 'William', age: 34, group: 'editor' },
+  { id: 97, name: 'Oliver', age: 28, group: 'admin' }
+];
+users.map(({id, age, group}) => `\n${id} ${age} ${group}`).join('')
+// it returns:
+"
+11 23 editor
+47 28 admin
+85 34 editor
+97 28 admin"
+```
+13. 객체 배열에서 key-value 쌍을 찾아서 바꾸기
+```js
+let updatedUsers = users.map(
+  p => p.id !== 47 ? p : {...p, age: p.age + 1}
+);
+// John is turning 29 now
+```
+14. A와 B의 합집합
+```js
+let arrA = [1, 4, 3, 2];
+let arrB = [5, 2, 6, 7, 1];
+[...new Set([...arrA, ...arrB])]; // returns [1, 4, 3, 2, 5, 6, 7]
+```
+15. A와 B의 교집합
+```js
+let arrA = [1, 4, 3, 2];
+let arrB = [5, 2, 6, 7, 1];
+arrA.filter(it => arrB.includes(it)); // returns [1, 2]
+```
 **[⬆ 목차](#목차)**
 
 ---

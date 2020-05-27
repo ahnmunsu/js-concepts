@@ -1066,7 +1066,7 @@ class TodoModel {
         }, 0);
     }
 }
-todoModel = TodoModel();
+todoModel = new TodoModel();
 todoModel.reload();
 ```
 *  위 문제는 callback에 화살표 함수를 사용하여 해결 할 수 있다.
@@ -1078,11 +1078,11 @@ class TodoModel {
     
     reload(){ 
         setTimeout(() => { 
-           console.log(this.todos);    //undefined
+           console.log(this.todos);    //[]
         }, 0);
     }
 }
-todoModel = TodoModel();
+todoModel = new TodoModel();
 todoModel.reload();
 ```
 *  Factory function은 this를 사용하지 않기 때문에 문제가 없다.
@@ -1095,6 +1095,10 @@ function TodoModel(){
            console.log(todos);        //[]
        }, 0);
     }
+    
+    return Object.freeze({
+        reload
+    });    
 }
 todoModel = TodoModel();
 todoModel.reload();

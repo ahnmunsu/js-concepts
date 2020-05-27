@@ -2822,7 +2822,7 @@ function run() {
       john = new Participant('John'),
       paul = new Participant('Paul'),
       ringo = new Participant('Ringo'),
-      chatroom = new Chatroom(),
+      chatroom = new Chatroom();
 
   chatroom.register(yoko);
   chatroom.register(john);

@@ -2146,7 +2146,7 @@ getData(function (tableData) {
 ```
 *  프로미스 적용
 ```js
-function getData(callback) {
+function getData() {
   // new Promise() 추가
   return new Promise(function (resolve, reject) {
     $.get('url 주소/products/1', function (response) {
